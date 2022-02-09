@@ -1,3 +1,11 @@
+CREATE TABLE vallejoColors (
+    id serial,
+    productNumber       int NOT NULL,
+    colorName      varchar(40) NOT NULL,
+    colorCode         varchar(16) NOT NULL,
+    PRIMARY KEY (id)
+);
+
 INSERT INTO vallejoColors(productNumber, colorName, colorCode) VALUES(70951, 'ホワイト', 'rgb(255,255,255)');
 INSERT INTO vallejoColors(productNumber, colorName, colorCode) VALUES(70919, 'コールドホワイト', 'rgb(255,255,255)');
 INSERT INTO vallejoColors(productNumber, colorName, colorCode) VALUES(70842, 'グロスホワイト', 'rgb(255,255,255)');
