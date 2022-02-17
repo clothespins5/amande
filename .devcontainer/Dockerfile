@@ -12,3 +12,19 @@ FROM mcr.microsoft.com/vscode/devcontainers/javascript-node:0-${VARIANT}
 
 # [Optional] Uncomment if you want to install more global node modules
 # RUN su node -c "npm install -g <your-package-list-here>"
+
+# *************************************************************
+# * Uncomment this section to use RUN instructions to install *
+# * any needed dependencies after executing "apt-get update". *
+# * See https://docs.docker.com/engine/reference/builder/#run *
+# *************************************************************
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends chromium \
+    # Clean up
+    && apt-get autoremove -y \
+    && apt-get clean -y \
+    && rm -rf /var/lib/apt/lists/*
+    
+ENV CHROME_BIN=/usr/bin/chromium
+
+RUN npm install -g @angular/cli

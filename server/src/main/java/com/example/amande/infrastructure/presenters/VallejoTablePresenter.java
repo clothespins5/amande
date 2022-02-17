@@ -16,7 +16,7 @@ public class VallejoTablePresenter implements IVallejoTablePresenter {
         try {
 
             ObjectMapper mapper = new ObjectMapper();
-            result = mapper.writeValueAsString(output);
+            result = mapper.writeValueAsString(output.paints);
 
         } catch (JsonProcessingException e) {
             e.printStackTrace();
