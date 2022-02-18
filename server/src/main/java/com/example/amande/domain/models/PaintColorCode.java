@@ -2,18 +2,13 @@ package com.example.amande.domain.models;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import org.apache.commons.math3.geometry.euclidean.threed.Vector3D;
+import com.example.amande.domain.models.color.CIEDE2000;
+import com.example.amande.domain.models.color.LAB;
+import com.example.amande.domain.models.color.RGB;
 
 public class PaintColorCode {
 
-    private final Vector3D colorVector;
-
-    private final String red;
-
-    private final String green;
-
-    private final String blue;
+    private final RGB rgb;
 
     /**
      * 
@@ -40,38 +35,35 @@ public class PaintColorCode {
 
     public static PaintColorCode create(String red, String green, String blue) {
 
-        Vector3D colorVector = new Vector3D(Double.parseDouble(red), Double.parseDouble(green), Double.parseDouble(blue));
+        Integer r = Integer.parseInt(red);
+        Integer g = Integer.parseInt(green);
+        Integer b = Integer.parseInt(blue);
+        RGB rgb = new RGB(r, g, b);
         
-        if (!Vector3D.ZERO.equals(colorVector)) {
-
-            colorVector = colorVector.normalize();
-
-        }
-
-        return new PaintColorCode(colorVector, red, green, blue);
+        return new PaintColorCode(rgb);
 
     }
 
 
-    private PaintColorCode(Vector3D colorVector, String red, String green, String blue) {
+    private PaintColorCode(RGB rgb) {
 
-        this.colorVector = colorVector;
-        this.red = red;
-        this.green = green;
-        this.blue = blue;
-
+        this.rgb = rgb;
     }
 
     public double near(PaintColorCode paintColor) {
 
-        return this.colorVector.dotProduct(paintColor.colorVector);
+        LAB source = this.rgb.toXYZ().toLAB();
+
+        LAB destination = paintColor.rgb.toXYZ().toLAB();
+
+        return CIEDE2000.calculation(source, destination);
 
     }
 
     @Override
     public String toString() {
 
-        return "rgb(" + this.red + ", " + this.green + ", " + this.blue + ")";
+        return this.rgb.toString();
         
     }
 }
