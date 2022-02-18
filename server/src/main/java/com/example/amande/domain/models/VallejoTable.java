@@ -30,7 +30,7 @@ public class VallejoTable {
 
         }
 
-        nearPaints.sort(Comparator.comparing(PaintNear::getNear).reversed());
+        nearPaints.sort(Comparator.comparing(PaintNear::getNear));
 
         return nearPaints;
     }
