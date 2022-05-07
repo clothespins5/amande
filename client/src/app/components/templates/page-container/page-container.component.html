@@ -1,0 +1,15 @@
+<mat-toolbar color="primary">
+  <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon" (click)="sidenav.toggle()">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <span>My Application</span>
+</mat-toolbar>
+<mat-sidenav-container>
+
+  <mat-sidenav #sidenav>Start</mat-sidenav>
+
+  <mat-sidenav-content>
+    <ng-content></ng-content>
+  </mat-sidenav-content>
+
+</mat-sidenav-container>
