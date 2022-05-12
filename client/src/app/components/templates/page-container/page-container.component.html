@@ -2,11 +2,20 @@
   <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon" (click)="sidenav.toggle()">
     <mat-icon>menu</mat-icon>
   </button>
-  <span>My Application</span>
+  <span>Amande</span>
 </mat-toolbar>
 <mat-sidenav-container>
 
-  <mat-sidenav #sidenav>Start</mat-sidenav>
+  <mat-sidenav #sidenav>
+		<mat-nav-list>
+			<mat-list-item class="parent">
+        <a routerLink="/">
+          <mat-icon mat-list-icon>home</mat-icon>
+          <span class="full-width" >Home</span>
+        </a>
+			</mat-list-item>
+		</mat-nav-list>
+  </mat-sidenav>
 
   <mat-sidenav-content>
     <ng-content></ng-content>

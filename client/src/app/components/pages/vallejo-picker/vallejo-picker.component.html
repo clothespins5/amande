@@ -3,7 +3,9 @@
         <app-vallejo-picker-canvas #vallejoPickerCanvas></app-vallejo-picker-canvas>
         <app-image-file-input></app-image-file-input>
         <div><span class="selectedColor" [style.background-color]="selectedColor"></span>{{selectedColor}}</div>
-        <button (click)="serchVallejoColors()">検索</button>
+        <div class="searchButtonArea">
+            <button mat-raised-button color="primary" (click)="serchVallejoColors()">検索</button>
+        </div>
         <app-vallejo-table #vallejoTable></app-vallejo-table>
     </section>
 </app-page-container>
