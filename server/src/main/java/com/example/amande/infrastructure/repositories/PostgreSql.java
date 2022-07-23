@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class PostgreSql {
     
-    private final String URL = "jdbc:postgresql://localhost:5432/postgres";
+    private final String URL = "jdbc:postgresql://postgres:5432/postgres";
     private final String USER = "postgres";
     private final String PASS = "postgres";
 

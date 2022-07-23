@@ -1,10 +1,21 @@
 version: '3.8'
 
 services:
+  redis:
+    image: redis:latest
+    hostname: radis
+    command: redis-server --appendonly yes
+    volumes:
+      - redis-data:/data
+    ports:
+      - "6379:6379"
+    expose:
+      - 6379
+    networks:
+      - net
   app:
-    build: 
-      context: .
-      dockerfile: Dockerfile
+    build:
+      dockerfile: ./Dockerfile
       args:
         # Update 'VARIANT' to pick an LTS version of Node.js: 16, 14, 12.
         # Append -bullseye or -buster to pin to an OS version.
@@ -18,7 +29,9 @@ services:
     command: sleep infinity
 
     # Runs app on the same network as the database container, allows "forwardPorts" in devcontainer.json function.
-    network_mode: service:db
+    # network_mode: service:db
+    networks:
+      - net
 
     # Uncomment the next line to use a non-root user for all processes.
     # user: node
@@ -28,6 +41,7 @@ services:
 
   db:
     image: postgres:latest
+    hostname: postgres
     restart: unless-stopped
     volumes:
       - postgres-data:/var/lib/postgresql/data
@@ -36,9 +50,15 @@ services:
       POSTGRES_PASSWORD: postgres
       POSTGRES_USER: postgres
       POSTGRES_DB: postgres
-
+    networks:
+      - net
     # Add "forwardPorts": ["5432"] to **devcontainer.json** to forward PostgreSQL locally.
     # (Adding the "ports" property to this file will not forward from a Codespace.)
 
 volumes:
   postgres-data:
+  redis-data:
+
+networks:
+  net:
+    driver: bridge
