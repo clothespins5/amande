@@ -1,9 +1,9 @@
 package com.example.amande.infrastructure.repositories;
 
-import com.example.amande.domain.models.VallejoTable;
+import com.example.amande.domain.models.Paints;
 
 public interface IVallejoTableRepository {
     
-    VallejoTable findAll();
+    Paints findAll();
     
 }

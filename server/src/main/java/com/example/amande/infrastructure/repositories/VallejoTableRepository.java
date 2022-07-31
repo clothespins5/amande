@@ -9,7 +9,7 @@ import com.example.amande.domain.models.Paint;
 import com.example.amande.domain.models.PaintColorCode;
 import com.example.amande.domain.models.PaintId;
 import com.example.amande.domain.models.PaintName;
-import com.example.amande.domain.models.VallejoTable;
+import com.example.amande.domain.models.Paints;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -20,7 +20,7 @@ public class VallejoTableRepository implements IVallejoTableRepository {
     @Autowired
     private PostgreSql postgreSql;
     
-    public VallejoTable findAll() {
+    public Paints findAll() {
 
         List<Paint> paints = new ArrayList<Paint>();
 
@@ -33,7 +33,10 @@ public class VallejoTableRepository implements IVallejoTableRepository {
                 Paint paint = new Paint(
                     new PaintId(resultSet.getInt("id")),
                     new PaintName(resultSet.getString("colorname")),
-                    PaintColorCode.create(resultSet.getString("colorcode"))
+                    new PaintColorCode.Builder()
+                            .specifiedColor(resultSet.getString("colorcode"))
+                            .buildOrElseThrow(builder -> new IllegalArgumentException())
+
                 );
                 paints.add(paint);
     
@@ -43,7 +46,7 @@ public class VallejoTableRepository implements IVallejoTableRepository {
             e.printStackTrace();
         }
 
-        VallejoTable vallejoTable = new VallejoTable(paints);
+        Paints vallejoTable = new Paints(paints);
 
         return vallejoTable;
     }

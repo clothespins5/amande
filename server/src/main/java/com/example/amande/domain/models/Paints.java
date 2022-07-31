@@ -1,25 +1,32 @@
 package com.example.amande.domain.models;
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.ToString;
+
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 
-public class VallejoTable {
-    
-    public final VallejoTableId id;
+@EqualsAndHashCode
+@ToString
+@Getter
+public class Paints {
 
-    public final List<Paint> paints;
+    private final List<Paint> paints;
 
-    public VallejoTable(List<Paint> paints) {
+    public Paints(List<Paint> paints) {
 
-        this.id = new VallejoTableId();
         this.paints = paints;
         
     }
 
-    public List<PaintNear> nearPaints(String specifiedColorString) {
+    public List<PaintNear> nearPaints(String specifiedColor) {
 
-        PaintColorCode specifiedColorCode = PaintColorCode.create(specifiedColorString);
+        PaintColorCode specifiedColorCode = new PaintColorCode.Builder()
+                .specifiedColor(specifiedColor)
+                .buildOrElseThrow(builder -> new IllegalArgumentException(builder.toString()));
         List<PaintNear> nearPaints = new ArrayList<PaintNear>();
 
         for (Paint paint : paints) {
