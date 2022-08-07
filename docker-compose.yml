@@ -11,33 +11,29 @@ services:
       - "6379:6379"
     expose:
       - 6379
-    networks:
-      - net
+
   app:
     build:
-      dockerfile: ./Dockerfile
-      args:
-        # Update 'VARIANT' to pick an LTS version of Node.js: 16, 14, 12.
-        # Append -bullseye or -buster to pin to an OS version.
-        # Use -bullseye variants on local arm64/Apple Silicon.
-        VARIANT: 16-bullseye
-
+      dockerfile: ./server/Dockerfile
     volumes:
-      - ..:/workspace:cached
-      
-    # Overrides default command so things don't shut down after the process ends.
-    command: sleep infinity
+      - ./server:/projects
+    ports:
+      - "8080:8080"
+    expose:
+      - 8080
+    working_dir: /projects
+    command: mvn spring-boot:run
 
-    # Runs app on the same network as the database container, allows "forwardPorts" in devcontainer.json function.
-    # network_mode: service:db
-    networks:
-      - net
 
-    # Uncomment the next line to use a non-root user for all processes.
-    # user: node
+  front:
+    build:
+      dockerfile: ./client/Dockerfile
+    volumes:
+      - ./client:/projects
+    ports:
+      - "4200:4200"
+    command: ng serve --host=0.0.0.0
 
-    # Use "forwardPorts" in **devcontainer.json** to forward an app port locally. 
-    # (Adding the "ports" property to this file will not forward from a Codespace.)
 
   db:
     image: postgres:latest
@@ -50,15 +46,9 @@ services:
       POSTGRES_PASSWORD: postgres
       POSTGRES_USER: postgres
       POSTGRES_DB: postgres
-    networks:
-      - net
-    # Add "forwardPorts": ["5432"] to **devcontainer.json** to forward PostgreSQL locally.
-    # (Adding the "ports" property to this file will not forward from a Codespace.)
+
 
 volumes:
   postgres-data:
   redis-data:
 
-networks:
-  net:
-    driver: bridge

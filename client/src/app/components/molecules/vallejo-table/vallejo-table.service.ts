@@ -15,7 +15,7 @@ export class VallejoTableService {
   public getVallejoColors(selectedColor: string): Observable<VallejoColor[]> {
 
     const specifiedColorCode = selectedColor.replace(/ /g,"");
-    return this.http.get<VallejoColor[]>('http://localhost:4200/app/vallejoTable?color='+specifiedColorCode+'&limit=10');
-    
+    return this.http.get<VallejoColor[]>('http://localhost:8080/vallejoTable?color='+specifiedColorCode+'&limit=10');
+
   }
 }

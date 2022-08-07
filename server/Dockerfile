@@ -1,0 +1,3 @@
+FROM maven
+
+WORKDIR /projects
