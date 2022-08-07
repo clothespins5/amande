@@ -1,6 +1,5 @@
-package com.example.amande.infrastructure.controllers;
+package com.example.amande.presentation.controller;
 
-import com.example.amande.infrastructure.presenters.IVallejoTablePresenter;
 import com.example.amande.usecase.IVallejoTableGetUseCase;
 import com.example.amande.usecase.VallejoTableGetInput;
 import com.example.amande.usecase.VallejoTableGetOutput;
@@ -16,16 +15,12 @@ public class VallejoTableController {
   @Autowired
   private IVallejoTableGetUseCase vallejoTableGetUseCase;
 
-  @Autowired
-  private IVallejoTablePresenter vallejoTablePresenter;
 
   @CrossOrigin(origins = "http://localhost:4200")
   @GetMapping("/vallejoTable")
-  public String getVallejoTable(@RequestParam String color, @RequestParam int limit) {
+  public VallejoTableGetOutput getVallejoTable(@RequestParam String color, @RequestParam int limit) {
 
     VallejoTableGetInput input = new VallejoTableGetInput(color, limit);
-    VallejoTableGetOutput output = vallejoTableGetUseCase.get(input);
-
-    return vallejoTablePresenter.toJson(output);
+    return vallejoTableGetUseCase.get(input);
   }
 }

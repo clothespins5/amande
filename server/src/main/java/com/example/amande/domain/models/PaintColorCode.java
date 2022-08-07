@@ -51,24 +51,15 @@ public final class PaintColorCode {
       Function<Builder, X> exceptionFunction
     ) throws X {
       if (specifiedColor != null) {
-        Pattern rgbPattern = Pattern.compile("(?<=\\(,| )\\d{1,3}");
+        System.out.println(specifiedColor);
+        Pattern rgbPattern = Pattern.compile("(?<=[(, ])\\d{1,3}");
         Matcher rgbMatcher = rgbPattern.matcher(specifiedColor);
-        if (rgbMatcher.matches())
-          throw exceptionFunction.apply(this);
 
-        if (!rgbMatcher.find())
-          throw exceptionFunction.apply(this);
-
+        rgbMatcher.find();
         int red = Integer.parseInt(rgbMatcher.group());
-
-        if (!rgbMatcher.find())
-          throw exceptionFunction.apply(this);
-
+        rgbMatcher.find();
         int green = Integer.parseInt(rgbMatcher.group());
-
-        if (!rgbMatcher.find())
-          throw exceptionFunction.apply(this);
-
+        rgbMatcher.find();
         int blue = Integer.parseInt(rgbMatcher.group());
         RGB rgb = new RGB(red, green, blue);
         return new PaintColorCode(rgb);
