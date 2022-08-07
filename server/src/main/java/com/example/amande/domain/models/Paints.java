@@ -7,7 +7,6 @@ import lombok.ToString;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Optional;
 
 @EqualsAndHashCode
 @ToString
@@ -27,17 +26,17 @@ public class Paints {
         PaintColorCode specifiedColorCode = new PaintColorCode.Builder()
                 .specifiedColor(specifiedColor)
                 .buildOrElseThrow(builder -> new IllegalArgumentException(builder.toString()));
-        List<PaintNear> nearPaints = new ArrayList<PaintNear>();
+        List<PaintNear> nearPaints = new ArrayList<>();
 
         for (Paint paint : paints) {
 
-            double near = paint.colorCode.near(specifiedColorCode);
-            PaintNear paintNear = new PaintNear(paint.id, near);
+            double near = paint.colorCode().near(specifiedColorCode);
+            PaintNear paintNear = new PaintNear(paint.id(), near);
             nearPaints.add(paintNear);
 
         }
 
-        nearPaints.sort(Comparator.comparing(PaintNear::getNear));
+        nearPaints.sort(Comparator.comparing(PaintNear::near));
 
         return nearPaints;
     }

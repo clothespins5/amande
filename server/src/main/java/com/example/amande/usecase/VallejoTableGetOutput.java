@@ -12,15 +12,18 @@ public class VallejoTableGetOutput {
 
     public static VallejoTableGetOutput create(List<Paint> paints, List<PaintNear> nearPaints) {
 
-        List<PaintGetOutput> output = new ArrayList<PaintGetOutput>();
+        List<PaintGetOutput> output = new ArrayList<>();
 
         for (PaintNear nearPaint: nearPaints) {
 
-            Paint paint = paints.stream().filter(searchPaint -> searchPaint.id.equals(nearPaint.id)).findFirst().orElse(null);
+            Paint paint = paints.stream()
+              .filter(searchPaint -> searchPaint.id().equals(nearPaint.id()))
+              .findFirst()
+              .orElseThrow();
             PaintGetOutput paintGetOutput = new PaintGetOutput(
-                paint.name.toString(), 
-                paint.colorCode.toString(),
-                nearPaint.getNear());
+                paint.name().toString(),
+                paint.colorCode().toString(),
+                nearPaint.near());
                 
             output.add(paintGetOutput);
         }
