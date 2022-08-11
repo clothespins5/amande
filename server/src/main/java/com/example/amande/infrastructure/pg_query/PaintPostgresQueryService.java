@@ -23,39 +23,24 @@ import java.util.stream.Collectors;
 @Service
 public class PaintPostgresQueryService implements PaintQueryService {
 
-  PostgreSql postgreSql;
+  private final PaintPostgresQueryMapper mapper;
 
   public PaintQueryResult nearPaints(PaintQueryInput input) {
-
-    List<Paint> paints = new ArrayList<>();
-
-    try {
-
-      ResultSet resultSet = postgreSql.executeQuery("SELECT * FROM vallejocolors");
-
-      while (resultSet.next()) {
-
-        Paint paint = Paint.reconstruct(
-          new PaintID(resultSet.getInt("id")),
-          new PaintName(resultSet.getString("colorname")),
-          PaintColorCode.from(resultSet.getString("colorcode"))
-        );
-        paints.add(paint.calculateColorProximity(PaintColorCode.from(input.colorCode())));
-
-      }
-
-    } catch (SQLException e) {
-      e.printStackTrace();
-    }
-
-    return paints
+    var paintColorCode = PaintColorCode.from(input.colorCode());
+    return mapper.selectAll()
       .stream()
+      .map(record -> Paint.reconstruct(
+        new PaintID(record.id()),
+        new PaintName(record.colorcode()),
+        PaintColorCode.from(record.colorcode())
+      ))
+      .map(paint -> paint.calculateColorProximity(paintColorCode))
       .map(paint -> new PaintQueryResultItem(
         paint.name().value(),
         paint.colorCode().toString(),
         paint.colorProximity().value()
       ))
-      .sorted(Comparator.comparing(PaintQueryResultItem::near).reversed())
+      .sorted(Comparator.comparing(PaintQueryResultItem::colorProximity).reversed())
       .limit(input.limit())
       .collect(Collectors.collectingAndThen(Collectors.toList(), PaintQueryResult::new));
   }
