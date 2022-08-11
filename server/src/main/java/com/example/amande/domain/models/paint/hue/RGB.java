@@ -1,4 +1,4 @@
-package com.example.amande.domain.models.color;
+package com.example.amande.domain.models.paint.hue;
 
 public record RGB(
   double r,

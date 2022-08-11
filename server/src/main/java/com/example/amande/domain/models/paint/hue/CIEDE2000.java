@@ -1,11 +1,19 @@
-package com.example.amande.domain.models.color;
+package com.example.amande.domain.models.paint.hue;
+
+import com.example.amande.domain.models.paint.PaintColorCode;
 
 import java.util.function.Function;
 
 public class CIEDE2000 {
 
-  public static double calculation(LAB source, LAB destination) {
-    return CIEDE2000.calculation(source, destination, 1, 1, 1);
+  public static double calculation(PaintColorCode source, PaintColorCode destination) {
+    return CIEDE2000.calculation(
+      source.rgb().toXYZ().toLAB(),
+      destination.rgb().toXYZ().toLAB(),
+      1,
+      1,
+      1
+    );
   }
 
   /**
@@ -17,19 +25,19 @@ public class CIEDE2000 {
     Function<Double, Double> degreeToRadian = (degree) -> degree * (Math.PI / 180d);
 
     double deltaLp = destination.l() - source.l();
-    double L_ = (source.l() + destination.l()) / 2;
-    double C1 = Math.sqrt(Math.pow(source.a(), 2) + Math.pow(source.b(), 2));
-    double C2 = Math.sqrt(Math.pow(destination.a(), 2) + Math.pow(destination.b(), 2));
-    double C_ = (C1 + C2) / 2;
-    double v = 1 - Math.sqrt(Math.pow(C_, 7) / (Math.pow(C_, 7) + Math.pow(25, 7)));
+    double l = (source.l() + destination.l()) / 2;
+    double c1 = Math.sqrt(Math.pow(source.a(), 2) + Math.pow(source.b(), 2));
+    double c2 = Math.sqrt(Math.pow(destination.a(), 2) + Math.pow(destination.b(), 2));
+    double c = (c1 + c2) / 2;
+    double v = 1 - Math.sqrt(Math.pow(c, 7) / (Math.pow(c, 7) + Math.pow(25, 7)));
     double ap1 = source.a() + (source.a() / 2d) *
       v;
     double ap2 = destination.a() + (destination.a() / 2d) *
       v;
-    double Cp1 = Math.sqrt(Math.pow(ap1, 2) + Math.pow(source.b(), 2));
-    double Cp2 = Math.sqrt(Math.pow(ap2, 2) + Math.pow(destination.b(), 2));
-    double Cp_ = (Cp1 + Cp2) / 2d;
-    double deltaCp = Cp2 - Cp1;
+    double cp1 = Math.sqrt(Math.pow(ap1, 2) + Math.pow(source.b(), 2));
+    double cp2 = Math.sqrt(Math.pow(ap2, 2) + Math.pow(destination.b(), 2));
+    double cp = (cp1 + cp2) / 2d;
+    double deltaCp = cp2 - cp1;
 
     double hp1;
     if (source.b() == 0 && ap1 == 0) {
@@ -51,7 +59,7 @@ public class CIEDE2000 {
     }
 
     double deltahp;
-    if (C1 == 0 || C2 == 0) {
+    if (c1 == 0 || c2 == 0) {
       deltahp = 0;
     } else if (Math.abs(hp1 - hp2) <= 180) {
       deltahp = hp2 - hp1;
@@ -61,7 +69,7 @@ public class CIEDE2000 {
       deltahp = hp2 - hp1 - 360;
     }
 
-    double deltaHp = 2 * Math.sqrt(Cp1 * Cp2) * Math.sin(degreeToRadian.apply(deltahp) / 2d);
+    double deltaHp = 2 * Math.sqrt(cp1 * cp2) * Math.sin(degreeToRadian.apply(deltahp) / 2d);
 
     double Hp_;
     if (Math.abs(hp1 - hp2) > 180) {
@@ -77,16 +85,16 @@ public class CIEDE2000 {
       0.20d * Math.cos(degreeToRadian.apply(4 * Hp_ - 63));
 
     double SL = 1 + (
-      (0.015d * Math.pow(L_ - 50, 2)) /
-        Math.sqrt(20 + Math.pow(L_ - 50, 2))
+      (0.015d * Math.pow(l - 50, 2)) /
+        Math.sqrt(20 + Math.pow(l - 50, 2))
     );
-    double SC = 1 + 0.045d * Cp_;
-    double SH = 1 + 0.015d * Cp_ * T;
+    double SC = 1 + 0.045d * cp;
+    double SH = 1 + 0.015d * cp * T;
 
     double RT = -2 *
       Math.sqrt(
-        Math.pow(Cp_, 7) /
-          (Math.pow(Cp_, 7) + Math.pow(25, 7))
+        Math.pow(cp, 7) /
+          (Math.pow(cp, 7) + Math.pow(25, 7))
       ) *
       Math.sin(degreeToRadian.apply(
         60d * Math.exp(-Math.pow((Hp_ - 275) / 25, 2))

@@ -1,11 +1,9 @@
 package com.example.amande.infrastructure.controllers;
 
-import com.example.amande.presentation.controller.VallejoTableController;
-import com.example.amande.usecase.IVallejoTableGetUseCase;
+import com.example.amande.presentation.controller.paint.PaintController;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
@@ -16,23 +14,17 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @AutoConfigureMockMvc
 @SpringBootTest
-public class VallejoTableControllerTest {
- 
-
+public class PaintControllerTest {
 
     private MockMvc mockMvc;
 
-    @Mock
-    private IVallejoTableGetUseCase vallejoTableGetUseCase;
-
-
     @InjectMocks
-    private VallejoTableController vallejoTableController;
+    private PaintController paintController;
 
     @BeforeEach
     void setup() {
 
-        this.mockMvc = MockMvcBuilders.standaloneSetup(this.vallejoTableController).build();
+        this.mockMvc = MockMvcBuilders.standaloneSetup(this.paintController).build();
 
     }
 

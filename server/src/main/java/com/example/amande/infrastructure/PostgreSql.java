@@ -1,4 +1,4 @@
-package com.example.amande.infrastructure.repositories;
+package com.example.amande.infrastructure;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
