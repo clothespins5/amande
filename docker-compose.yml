@@ -3,7 +3,8 @@ version: '3.8'
 services:
   redis:
     image: redis:latest
-    hostname: radis
+    container_name: redis
+    hostname: redis
     command: redis-server --appendonly yes
     volumes:
       - redis-data:/data
@@ -13,6 +14,7 @@ services:
       - 6379
 
   app:
+    container_name: app
     build:
       dockerfile: ./server/Dockerfile
     volumes:
@@ -25,6 +27,7 @@ services:
     command: gradle clean bootRun -x test
 
   front:
+    container_name: front
     build:
       dockerfile: ./client/Dockerfile
     volumes:
@@ -35,6 +38,7 @@ services:
 
 
   db:
+    container_name: dbcd
     image: postgres:latest
     hostname: postgres
     restart: unless-stopped
