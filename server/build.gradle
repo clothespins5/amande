@@ -4,14 +4,9 @@
 
 plugins {
     id 'java'
-    id 'maven-publish'
 }
 
 repositories {
-    mavenLocal()
-    maven {
-        url = uri('https://repo.maven.apache.org/maven2/')
-    }
   mavenCentral()
 }
 
@@ -49,13 +44,6 @@ java {
   }
 }
 
-publishing {
-    publications {
-        maven(MavenPublication) {
-            from(components.java)
-        }
-    }
-}
 
 tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'
