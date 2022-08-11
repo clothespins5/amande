@@ -1,4 +1,4 @@
-package com.example.amande.infrastructure.pg_query;
+package com.example.amande.infrastructure.pg_query.paint;
 
 import com.example.amande.application.query.paint.PaintQueryInput;
 import com.example.amande.application.query.paint.PaintQueryResult;
@@ -8,15 +8,10 @@ import com.example.amande.domain.models.paint.Paint;
 import com.example.amande.domain.models.paint.PaintColorCode;
 import com.example.amande.domain.models.paint.PaintID;
 import com.example.amande.domain.models.paint.PaintName;
-import com.example.amande.infrastructure.PostgreSql;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.List;
 import java.util.stream.Collectors;
 
 @AllArgsConstructor
@@ -31,8 +26,8 @@ public class PaintPostgresQueryService implements PaintQueryService {
       .stream()
       .map(record -> Paint.reconstruct(
         new PaintID(record.id()),
-        new PaintName(record.colorcode()),
-        PaintColorCode.from(record.colorcode())
+        new PaintName(record.colorName()),
+        PaintColorCode.from(record.colorCode())
       ))
       .map(paint -> paint.calculateColorProximity(paintColorCode))
       .map(paint -> new PaintQueryResultItem(
@@ -40,7 +35,7 @@ public class PaintPostgresQueryService implements PaintQueryService {
         paint.colorCode().toString(),
         paint.colorProximity().value()
       ))
-      .sorted(Comparator.comparing(PaintQueryResultItem::colorProximity).reversed())
+      .sorted(Comparator.comparing(PaintQueryResultItem::colorProximity))
       .limit(input.limit())
       .collect(Collectors.collectingAndThen(Collectors.toList(), PaintQueryResult::new));
   }

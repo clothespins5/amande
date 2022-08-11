@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.amande.infrastructure.pg_query.paint.PaintPostgresQueryMapper">
+  <select id="selectAll" resultType="com.example.amande.infrastructure.pg_query.paint.PaintPostgresQueryRecord">
+    SELECT id,
+           productnumber as productNumber,
+           colorname as colorName,
+           colorcode as colorCode
+    FROM vallejocolors
+  </select>
+</mapper>

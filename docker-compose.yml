@@ -22,8 +22,7 @@ services:
     expose:
       - 8080
     working_dir: /projects
-    command: mvn spring-boot:run
-
+    command: gradle clean bootRun -x test
 
   front:
     build:
@@ -48,7 +47,8 @@ services:
       POSTGRES_DB: postgres
     ports:
       - "5432:5432"
-
+    expose:
+      - 5432
 
 volumes:
   postgres-data:

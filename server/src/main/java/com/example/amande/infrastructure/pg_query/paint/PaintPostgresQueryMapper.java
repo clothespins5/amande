@@ -1,4 +1,4 @@
-package com.example.amande.infrastructure.pg_query;
+package com.example.amande.infrastructure.pg_query.paint;
 
 import org.apache.ibatis.annotations.Mapper;
 

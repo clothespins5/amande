@@ -1,4 +1,4 @@
-package com.example.amande.infrastructure.pg_query;
+package com.example.amande.infrastructure.pg_query.paint;
 
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -7,7 +7,7 @@ import lombok.experimental.Accessors;
 @Accessors(fluent = true)
 public class PaintPostgresQueryRecord {
   Integer id;
-  Integer productnumber;
-  String colorname;
-  String colorcode;
+  String productNumber;
+  String colorName;
+  String colorCode;
 }
