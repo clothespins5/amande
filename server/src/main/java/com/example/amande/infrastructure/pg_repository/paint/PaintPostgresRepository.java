@@ -13,4 +13,14 @@ public class PaintPostgresRepository implements PaintRepository {
   public Optional<Paint> findByID(PaintID id) {
     throw new AssertionError();
   }
+
+  @Override
+  public void save(Paint paint) {
+    throw new AssertionError();
+  }
+
+  @Override
+  public void delete(Paint paint) {
+    throw new AssertionError();
+  }
 }

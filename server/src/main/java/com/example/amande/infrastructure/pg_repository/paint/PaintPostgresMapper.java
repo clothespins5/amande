@@ -4,5 +4,9 @@ import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
 public interface PaintPostgresMapper {
-  void insert();
+  PaintPostgresRecord selectByID(Integer id);
+
+  int insert(String productNumber, String colorName, String colorCode);
+
+  int delete(Integer id);
 }
