@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { VallejoPickerComponent } from './components/pages/vallejo-picker/vallejo-picker.component';
+import { VallejoPickerComponent } from './components/page/vallejo-picker/vallejo-picker.component';
 
 const routes: Routes = [
   { path: '', component: VallejoPickerComponent },

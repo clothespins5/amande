@@ -1,10 +1,10 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { ImageFileInputService } from '../../atoms/image-file-input/image-file-input.service';
-import { VallejoPickerCanvasComponent } from '../../atoms/vallejo-picker-canvas/vallejo-picker-canvas.component';
-import { VallejoPickerCanvasService } from '../../atoms/vallejo-picker-canvas/vallejo-picker-canvas.service';
-import { VallejoColor, VallejoTableComponent } from '../../molecules/vallejo-table/vallejo-table.component';
-import { VallejoTableService } from '../../molecules/vallejo-table/vallejo-table.service';
+import { ImageFileInputService } from '../../presentational/image-file-input/image-file-input.service';
+import { VallejoPickerCanvasComponent } from '../../presentational/vallejo-picker-canvas/vallejo-picker-canvas.component';
+import { VallejoPickerCanvasService } from '../../presentational/vallejo-picker-canvas/vallejo-picker-canvas.service';
+import { VallejoColor, VallejoTableComponent } from '../../container/vallejo-table/vallejo-table.component';
+import { VallejoTableService } from '../../container/vallejo-table/vallejo-table.service';
 
 @Component({
   selector: 'app-vallejo-picker',
@@ -24,7 +24,7 @@ export class VallejoPickerComponent implements OnInit, OnDestroy {
 
   @ViewChild(VallejoTableComponent)
   public vallejoTable!: VallejoTableComponent;
-  
+
   constructor(
     private imageFileInputService: ImageFileInputService,
     private vallejoPickerCanvasService: VallejoPickerCanvasService,
@@ -32,7 +32,7 @@ export class VallejoPickerComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    
+
     this.dataUrlSubscription = this.imageFileInputService.dataURLObservable.subscribe(
       (dataUrl: string) => {
         this.vallejoPickerCanvas.setDataUrl(dataUrl);
