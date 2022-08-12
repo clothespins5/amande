@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { VallejoColor } from './vallejo-table.component';
+import { VallejoColor } from '../components/container/vallejo-picker/vallejo-table/vallejo-table.component';
 import { Observable } from 'rxjs';
 
 @Injectable({

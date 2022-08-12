@@ -1,10 +1,10 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { ImageFileInputService } from '../../presentational/image-file-input/image-file-input.service';
+import { ImageFileInputService } from '../../../service/image-file-input.service';
 import { VallejoPickerCanvasComponent } from '../../presentational/vallejo-picker-canvas/vallejo-picker-canvas.component';
-import { VallejoPickerCanvasService } from '../../presentational/vallejo-picker-canvas/vallejo-picker-canvas.service';
-import { VallejoColor, VallejoTableComponent } from '../../container/vallejo-table/vallejo-table.component';
-import { VallejoTableService } from '../../container/vallejo-table/vallejo-table.service';
+import { VallejoPickerCanvasService } from '../../../service/vallejo-picker-canvas.service';
+import { VallejoColor, VallejoTableComponent } from '../../container/vallejo-picker/vallejo-table/vallejo-table.component';
+import { VallejoTableService } from '../../../service/vallejo-table.service';
 
 @Component({
   selector: 'app-vallejo-picker',

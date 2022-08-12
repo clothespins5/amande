@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
-import { VallejoPickerCanvasService } from './vallejo-picker-canvas.service';
+import { VallejoPickerCanvasService } from '../../../service/vallejo-picker-canvas.service';
 
 @Component({
   selector: 'app-vallejo-picker-canvas',
@@ -10,7 +10,7 @@ export class VallejoPickerCanvasComponent implements AfterViewInit {
 
   public position = {};
 
-  @ViewChild('myCanvas') 
+  @ViewChild('myCanvas')
   private canvasElement!: ElementRef
 
   private canvasContext!: CanvasRenderingContext2D

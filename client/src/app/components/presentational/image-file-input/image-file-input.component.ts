@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ImageFileInputService } from './image-file-input.service';
+import { ImageFileInputService } from '../../../service/image-file-input.service';
 
 @Component({
   selector: 'app-image-file-input',
@@ -10,7 +10,7 @@ export class ImageFileInputComponent implements OnInit {
 
   private reader: FileReader;
 
-  constructor(private imageFileInputService: ImageFileInputService) { 
+  constructor(private imageFileInputService: ImageFileInputService) {
     this.reader = new FileReader();
   }
 

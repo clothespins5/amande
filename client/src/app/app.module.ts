@@ -35,7 +35,7 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { VallejoPickerComponent } from './components/page/vallejo-picker/vallejo-picker.component';
 import { VallejoPickerCanvasComponent } from './components/presentational/vallejo-picker-canvas/vallejo-picker-canvas.component';
 import { ImageFileInputComponent } from './components/presentational/image-file-input/image-file-input.component';
-import { VallejoTableComponent } from './components/container/vallejo-table/vallejo-table.component';
+import { VallejoTableComponent } from './components/container/vallejo-picker/vallejo-table/vallejo-table.component';
 import { PageContainerComponent } from './components/page/page-container/page-container.component';
 
 @NgModule({
