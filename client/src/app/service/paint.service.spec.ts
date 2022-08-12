@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { VallejoTableService } from './vallejo-table.service';
+import { PaintService } from './paint.service';
 
 describe('VallejoTableService', () => {
-  let service: VallejoTableService;
+  let service: PaintService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(VallejoTableService);
+    service = TestBed.inject(PaintService);
   });
 
   it('should be created', () => {

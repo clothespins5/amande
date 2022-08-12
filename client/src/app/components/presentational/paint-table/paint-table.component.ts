@@ -8,23 +8,23 @@ export interface VallejoColor {
 
 
 @Component({
-  selector: 'app-vallejo-table',
-  templateUrl: './vallejo-table.component.html',
-  styleUrls: ['./vallejo-table.component.sass']
+  selector: 'app-paint-table',
+  templateUrl: './paint-table.component.html',
+  styleUrls: ['./paint-table.component.sass']
 })
-export class VallejoTableComponent implements OnInit {
+export class PaintTableComponent implements OnInit {
 
   displayedColumns: string[] = ['name', 'rgb', 'color'];
-  
+
   dataSource!: VallejoColor[];
-  
+
   constructor() { }
 
   ngOnInit(): void {
   }
 
   public setVallejoColors(vallejoColors: VallejoColor[]): void {
-    
+
     this.dataSource = vallejoColors;
 
   }

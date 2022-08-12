@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { VallejoPickerComponent } from './components/page/vallejo-picker/vallejo-picker.component';
+import { FindPaintComponent } from './components/page/find-paint/find-paint.component';
 
 const routes: Routes = [
-  { path: '', component: VallejoPickerComponent },
-  { path: 'vallejo-picker', component: VallejoPickerComponent }
+  { path: '', component: FindPaintComponent },
+  { path: 'vallejo-picker', component: FindPaintComponent }
 ];
 
 @NgModule({

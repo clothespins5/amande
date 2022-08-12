@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { VallejoPickerComponent } from './vallejo-picker.component';
+import { PaintTableComponent } from './paint-table.component';
 
-describe('VallejoPickerComponent', () => {
-  let component: VallejoPickerComponent;
-  let fixture: ComponentFixture<VallejoPickerComponent>;
+describe('VallejoTableComponent', () => {
+  let component: PaintTableComponent;
+  let fixture: ComponentFixture<PaintTableComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ VallejoPickerComponent ]
+      declarations: [ PaintTableComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(VallejoPickerComponent);
+    fixture = TestBed.createComponent(PaintTableComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

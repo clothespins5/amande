@@ -1,17 +1,17 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { ImageFileInputService } from '../../../service/image-file-input.service';
-import { VallejoPickerCanvasComponent } from '../../presentational/vallejo-picker-canvas/vallejo-picker-canvas.component';
+import { ColorPickerCanvasComponent } from '../../presentational/color-picker-canvas/color-picker-canvas.component';
 import { VallejoPickerCanvasService } from '../../../service/vallejo-picker-canvas.service';
-import { VallejoColor, VallejoTableComponent } from '../../container/vallejo-picker/vallejo-table/vallejo-table.component';
-import { VallejoTableService } from '../../../service/vallejo-table.service';
+import { VallejoColor, PaintTableComponent } from '../../presentational/paint-table/paint-table.component';
+import { PaintService } from '../../../service/paint.service';
 
 @Component({
-  selector: 'app-vallejo-picker',
-  templateUrl: './vallejo-picker.component.html',
-  styleUrls: ['./vallejo-picker.component.sass']
+  selector: 'app-find-paint',
+  templateUrl: './find-paint.component.html',
+  styleUrls: ['./find-paint.component.sass']
 })
-export class VallejoPickerComponent implements OnInit, OnDestroy {
+export class FindPaintComponent implements OnInit, OnDestroy {
 
   private dataUrlSubscription!: Subscription;
 
@@ -19,16 +19,16 @@ export class VallejoPickerComponent implements OnInit, OnDestroy {
 
   public selectedColor: string = "";
 
-  @ViewChild(VallejoPickerCanvasComponent)
-  public vallejoPickerCanvas!: VallejoPickerCanvasComponent;
+  @ViewChild(ColorPickerCanvasComponent)
+  public vallejoPickerCanvas!: ColorPickerCanvasComponent;
 
-  @ViewChild(VallejoTableComponent)
-  public vallejoTable!: VallejoTableComponent;
+  @ViewChild(PaintTableComponent)
+  public vallejoTable!: PaintTableComponent;
 
   constructor(
     private imageFileInputService: ImageFileInputService,
     private vallejoPickerCanvasService: VallejoPickerCanvasService,
-    private vallejoTableService: VallejoTableService,
+    private vallejoTableService: PaintService,
   ) { }
 
   ngOnInit(): void {
@@ -54,14 +54,14 @@ export class VallejoPickerComponent implements OnInit, OnDestroy {
 
   }
 
-  serchVallejoColors(): void {
+  findPaints(): void {
 
-    this.vallejoTableService.getVallejoColors(this.selectedColor)
-      .subscribe(
-        (vallejoColors: VallejoColor[]) => {
-          this.vallejoTable.setVallejoColors(vallejoColors);
-        }
-      );
+    // this.vallejoTableService.fetchPaints(this.selectedColor)
+    //   .subscribe(
+    //     (vallejoColors: VallejoColor[]) => {
+    //       this.vallejoTable.setVallejoColors(vallejoColors);
+    //     }
+    //   );
   }
 
 

@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ImageFileInputComponent } from './image-file-input.component';
+import { ImageFileInputButtonComponent } from './image-file-input-button.component';
 
 describe('ImageFileInputComponent', () => {
-  let component: ImageFileInputComponent;
-  let fixture: ComponentFixture<ImageFileInputComponent>;
+  let component: ImageFileInputButtonComponent;
+  let fixture: ComponentFixture<ImageFileInputButtonComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ImageFileInputComponent ]
+      declarations: [ ImageFileInputButtonComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ImageFileInputComponent);
+    fixture = TestBed.createComponent(ImageFileInputButtonComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

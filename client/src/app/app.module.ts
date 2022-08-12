@@ -32,20 +32,24 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
-import { VallejoPickerComponent } from './components/page/vallejo-picker/vallejo-picker.component';
-import { VallejoPickerCanvasComponent } from './components/presentational/vallejo-picker-canvas/vallejo-picker-canvas.component';
-import { ImageFileInputComponent } from './components/presentational/image-file-input/image-file-input.component';
-import { VallejoTableComponent } from './components/container/vallejo-picker/vallejo-table/vallejo-table.component';
+import { FindPaintComponent } from './components/page/find-paint/find-paint.component';
+import { ColorPickerCanvasComponent } from './components/presentational/color-picker-canvas/color-picker-canvas.component';
+import { ImageFileInputButtonComponent } from './components/presentational/image-file-input-button/image-file-input-button.component';
+import { PaintTableComponent } from './components/presentational/paint-table/paint-table.component';
 import { PageContainerComponent } from './components/page/page-container/page-container.component';
+import { FindPaintsAndViewResultsComponent } from './components/container/find-paint/find-paints-and-view-results/find-paints-and-view-results.component';
+import { SelectColorFromImageComponent } from './components/container/find-paint/select-color-from-image/select-color-from-image.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    VallejoPickerComponent,
-    VallejoPickerCanvasComponent,
-    ImageFileInputComponent,
-    VallejoTableComponent,
-    PageContainerComponent
+    FindPaintComponent,
+    ColorPickerCanvasComponent,
+    ImageFileInputButtonComponent,
+    PaintTableComponent,
+    PageContainerComponent,
+    FindPaintsAndViewResultsComponent,
+    SelectColorFromImageComponent
   ],
   imports: [
     BrowserModule,
