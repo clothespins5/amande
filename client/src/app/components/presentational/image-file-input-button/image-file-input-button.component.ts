@@ -9,8 +9,7 @@ export class ImageFileInputButtonComponent implements OnInit {
 
   private reader: FileReader;
 
-  @Output()
-  onFileLoad = new EventEmitter<string>();
+  @Output() onFileLoad: EventEmitter<string> = new EventEmitter<string>();
 
   constructor() {
     this.reader = new FileReader();

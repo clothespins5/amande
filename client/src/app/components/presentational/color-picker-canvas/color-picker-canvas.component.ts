@@ -15,7 +15,7 @@ export class ColorPickerCanvasComponent implements AfterViewInit {
   private canvasContext!: CanvasRenderingContext2D
 
   @Output()
-  imageData = new EventEmitter<ImageData>();
+  clickCanvas: EventEmitter<ImageData> = new EventEmitter<ImageData>();
 
   constructor() {}
 
@@ -38,6 +38,6 @@ export class ColorPickerCanvasComponent implements AfterViewInit {
       'top': event.offsetY + 'px',
       'left': event.offsetX + 'px'
     }
-    this.imageData.emit(this.canvasContext.getImageData(event.offsetX, event.offsetY, 1, 1));
+    this.clickCanvas.emit(this.canvasContext.getImageData(event.offsetX, event.offsetY, 1, 1));
   }
 }

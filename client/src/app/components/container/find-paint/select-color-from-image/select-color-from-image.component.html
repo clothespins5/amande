@@ -1,0 +1,6 @@
+<app-color-picker-canvas (clickCanvas)="onClickCanvas($event)"></app-color-picker-canvas>
+<app-image-file-input-button (onFileLoad)="setDataUrlToCanvas($event)"></app-image-file-input-button>
+<div>
+  <span class="selectedColor" [style.background-color]="getClickedCanvasColor()"></span>
+  {{getClickedCanvasColor()}}
+</div>

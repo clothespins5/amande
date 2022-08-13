@@ -1,11 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
-export interface VallejoColor {
-  name: string;
-  colorCode: string;
-  near: number;
-}
-
+import {Paint} from "../../../service/paint.service";
 
 @Component({
   selector: 'app-paint-table',
@@ -16,17 +10,11 @@ export class PaintTableComponent implements OnInit {
 
   displayedColumns: string[] = ['name', 'rgb', 'color'];
 
-  dataSource!: VallejoColor[];
+  dataSource!: Paint[];
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit(): void {
-  }
-
-  public setVallejoColors(vallejoColors: VallejoColor[]): void {
-
-    this.dataSource = vallejoColors;
-
   }
 
 }

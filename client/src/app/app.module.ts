@@ -36,7 +36,7 @@ import { FindPaintComponent } from './components/page/find-paint/find-paint.comp
 import { ColorPickerCanvasComponent } from './components/presentational/color-picker-canvas/color-picker-canvas.component';
 import { ImageFileInputButtonComponent } from './components/presentational/image-file-input-button/image-file-input-button.component';
 import { PaintTableComponent } from './components/presentational/paint-table/paint-table.component';
-import { PageContainerComponent } from './components/page/page-container/page-container.component';
+import { PageContainerComponent } from './components/container/page-container/page-container.component';
 import { FindPaintsAndViewResultsComponent } from './components/container/find-paint/find-paints-and-view-results/find-paints-and-view-results.component';
 import { SelectColorFromImageComponent } from './components/container/find-paint/select-color-from-image/select-color-from-image.component';
 

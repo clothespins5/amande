@@ -1,11 +1,6 @@
 <app-page-container>
     <section>
-        <app-color-picker-canvas #vallejoPickerCanvas></app-color-picker-canvas>
-        <app-image-file-input-button></app-image-file-input-button>
-        <div><span class="selectedColor" [style.background-color]="selectedColor"></span>{{selectedColor}}</div>
-        <div class="searchButtonArea">
-            <button mat-raised-button color="primary" (click)="findPaints()">検索</button>
-        </div>
-        <app-paint-table #vallejoTable></app-paint-table>
+      <app-select-color-from-image></app-select-color-from-image>
+      <app-find-paints-and-view-results></app-find-paints-and-view-results>
     </section>
 </app-page-container>
