@@ -44,7 +44,7 @@ export class PaintService {
     this.paintApi
       .get(this.rgb.toString())
       .subscribe((response) => {
-        const paints = response.paints.map(
+        const paints = response.results.map(
           item => new Paint(
             item.name,
             item.colorCode,

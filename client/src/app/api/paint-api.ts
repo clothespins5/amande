@@ -10,7 +10,7 @@ export type GetPaintResponseItem = {
 }
 
 export type GetPaintResponse = {
-  paints: GetPaintResponseItem[]
+  results: GetPaintResponseItem[]
 }
 
 @Injectable({

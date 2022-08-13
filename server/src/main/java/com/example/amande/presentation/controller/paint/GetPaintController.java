@@ -20,17 +20,17 @@ public class GetPaintController {
 
   @CrossOrigin(origins = "http://localhost:4200")
   @GetMapping("/paints")
-  public List<GetPaintResponse> get(@RequestParam String rgb, @RequestParam int limit) {
+  public GetPaintResponse get(@RequestParam String rgb, @RequestParam int limit) {
 
     PaintQueryInput input = new PaintQueryInput(rgb, limit);
     PaintQueryResult result = service.get(input);
-      return result.paints()
-        .stream()
-        .map(item -> new GetPaintResponse(
-          item.name(),
-          item.colorCode(),
-          item.colorProximity()
-        ))
-        .toList();
+    return result.results()
+      .stream()
+      .map(item -> new GetPaintResponseItem(
+        item.name(),
+        item.colorCode(),
+        item.colorProximity()
+      ))
+      .collect(Collectors.collectingAndThen(Collectors.toList(), GetPaintResponse::new));
   }
 }
