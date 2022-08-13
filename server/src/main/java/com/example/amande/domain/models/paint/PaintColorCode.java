@@ -31,6 +31,6 @@ public class PaintColorCode {
 
   @Override
   public String toString() {
-    return this.rgb.toString();
+    return "rgb(" + this.rgb.r() + "," + this.rgb.g() + "," + this.rgb.b() + ")";
   }
 }

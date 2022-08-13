@@ -22,6 +22,6 @@ export class PaintApi {
   ) {}
 
   public get(rgb: string): Observable<GetPaintResponse> {
-    return this.http.get<GetPaintResponse>('http://localhost:8080/vallejoTable?color='+rgb+'&limit=10');
+    return this.http.get<GetPaintResponse>('http://localhost:8080/paints?rgb='+rgb+'&limit=10');
   }
 }

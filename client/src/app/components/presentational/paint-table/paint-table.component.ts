@@ -10,7 +10,7 @@ export class PaintTableComponent implements OnInit {
 
   displayedColumns: string[] = ['name', 'rgb', 'color'];
 
-  dataSource!: Paint[];
+  dataSource: Paint[] = [];
 
   constructor() {}
 

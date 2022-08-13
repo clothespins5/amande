@@ -20,7 +20,7 @@ public class PaintPostgresQueryService implements PaintQueryService {
 
   private final PaintPostgresQueryMapper mapper;
 
-  public PaintQueryResult nearPaints(PaintQueryInput input) {
+  public PaintQueryResult get(PaintQueryInput input) {
     var paintColorCode = PaintColorCode.from(input.colorCode());
     return mapper.selectAll()
       .stream()

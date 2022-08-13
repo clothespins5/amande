@@ -1,6 +1,6 @@
 package com.example.amande.infrastructure.controllers;
 
-import com.example.amande.presentation.controller.paint.PaintController;
+import com.example.amande.presentation.controller.paint.GetPaintController;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -19,7 +19,7 @@ public class PaintControllerTest {
     private MockMvc mockMvc;
 
     @InjectMocks
-    private PaintController paintController;
+    private GetPaintController paintController;
 
     @BeforeEach
     void setup() {
