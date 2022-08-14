@@ -1,9 +1,8 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
 import {PageContainerComponent} from "./page-container.component";
 import {MaterialModule} from "../../../material.module";
 import {RouterModule} from "@angular/router";
-
 
 
 @NgModule({
@@ -19,4 +18,4 @@ import {RouterModule} from "@angular/router";
     RouterModule,
   ]
 })
-export class PageContainerModule { }
+export class PageContainerModule {}
