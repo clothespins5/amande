@@ -7,24 +7,25 @@ import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 })
 export class ImageFileInputButtonComponent implements OnInit {
 
-  private reader: FileReader;
+  private _reader: FileReader;
 
-  @Output() onFileLoad: EventEmitter<string> = new EventEmitter<string>();
+  @Output()
+  onFileLoad: EventEmitter<string> = new EventEmitter<string>();
 
   constructor() {
-    this.reader = new FileReader();
+    this._reader = new FileReader();
   }
 
   ngOnInit(): void {
-    this.reader.onload = (event: Event) => {
-      this.onFileLoad.emit(this.reader.result as string);
+    this._reader.onload = () => {
+      this.onFileLoad.emit(this._reader.result as string);
     }
   }
 
   change(event: Event) {
     const target = event.target as HTMLInputElement;
     const file = target.files?.[0] as File;
-    this.reader.readAsDataURL(file);
+    this._reader.readAsDataURL(file);
   }
 
 }

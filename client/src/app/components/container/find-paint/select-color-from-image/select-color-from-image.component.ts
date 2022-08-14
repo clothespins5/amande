@@ -9,10 +9,10 @@ import {ColorPickerCanvasComponent} from "../../../presentational/color-picker-c
 })
 export class SelectColorFromImageComponent implements OnInit {
 
-  private rgb?: RGB;
+  private _rgb?: RGB;
 
   @ViewChild(ColorPickerCanvasComponent)
-  colorPickerCanvas!: ColorPickerCanvasComponent;
+  colorPickerCanvasComponent!: ColorPickerCanvasComponent;
 
   constructor(
     private paintService: PaintService
@@ -22,20 +22,20 @@ export class SelectColorFromImageComponent implements OnInit {
   }
 
   onClickCanvas(imageData: ImageData): void {
-    this.rgb = new RGB(
+    this._rgb = new RGB(
       imageData.data[0],
       imageData.data[1],
       imageData.data[2]
     );
-    this.paintService.setRGB(this.rgb);
+    this.paintService.setRGB(this._rgb);
   }
 
   setDataUrlToCanvas(dataUrl: string): void {
-    this.colorPickerCanvas.setDataUrl(dataUrl);
+    this.colorPickerCanvasComponent.setDataUrl(dataUrl);
   }
 
   getClickedCanvasColor(): string {
-    return (this.rgb === undefined) ? '' : this.rgb.toString();
+    return (this._rgb === undefined) ? '' : this._rgb.toString();
   }
 
 

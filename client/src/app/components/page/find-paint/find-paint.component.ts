@@ -10,10 +10,10 @@ import {PaintTableComponent} from '../../presentational/paint-table/paint-table.
 export class FindPaintComponent implements OnInit {
 
   @ViewChild(ColorPickerCanvasComponent)
-  public vallejoPickerCanvas!: ColorPickerCanvasComponent;
+  vallejoPickerCanvas!: ColorPickerCanvasComponent;
 
   @ViewChild(PaintTableComponent)
-  public vallejoTable!: PaintTableComponent;
+  vallejoTable!: PaintTableComponent;
 
   constructor() {}
 

@@ -7,12 +7,12 @@ import {AfterViewInit, Component, ElementRef, EventEmitter, Output, ViewChild} f
 })
 export class ColorPickerCanvasComponent implements AfterViewInit {
 
-  public position = {};
-
   @ViewChild('myCanvas')
-  private canvasElement!: ElementRef
+  private _canvasElement!: ElementRef
 
-  private canvasContext!: CanvasRenderingContext2D
+  private _canvasContext!: CanvasRenderingContext2D
+
+  position = {};
 
   @Output()
   clickCanvas: EventEmitter<ImageData> = new EventEmitter<ImageData>();
@@ -20,24 +20,24 @@ export class ColorPickerCanvasComponent implements AfterViewInit {
   constructor() {}
 
   ngAfterViewInit(): void {
-    this.canvasContext = this.canvasElement.nativeElement.getContext('2d')!;
+    this._canvasContext = this._canvasElement.nativeElement.getContext('2d')!;
   }
 
   setDataUrl(dataUrl: string): void {
     const img = new Image();
     img.src = dataUrl;
     img.onload = () => {
-      this.canvasContext.canvas.width = img.width;
-      this.canvasContext.canvas.height = img.height;
-      this.canvasContext.drawImage(img, 0, 0);
+      this._canvasContext.canvas.width = img.width;
+      this._canvasContext.canvas.height = img.height;
+      this._canvasContext.drawImage(img, 0, 0);
     }
   }
 
   click(event: MouseEvent): void {
     this.position = {
-      'top': event.offsetY + 'px',
-      'left': event.offsetX + 'px'
+      'top': event.offsetY - 10 + 'px',
+      'left': event.offsetX - 10 + 'px'
     }
-    this.clickCanvas.emit(this.canvasContext.getImageData(event.offsetX, event.offsetY, 1, 1));
+    this.clickCanvas.emit(this._canvasContext.getImageData(event.offsetX, event.offsetY, 1, 1));
   }
 }

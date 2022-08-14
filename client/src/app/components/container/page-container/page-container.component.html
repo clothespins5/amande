@@ -8,12 +8,18 @@
 
   <mat-sidenav #sidenav>
 		<mat-nav-list>
-			<mat-list-item class="parent">
-        <a routerLink="/">
-          <mat-icon mat-list-icon>home</mat-icon>
-          <span class="full-width" >Home</span>
+			<mat-list-item>
+        <a routerLink="/find-paint">
+          <mat-icon mat-list-icon>search</mat-icon>
+          <span class="full-width">塗料を探す</span>
         </a>
 			</mat-list-item>
+      <mat-list-item>
+        <a routerLink="/paint-stock">
+          <mat-icon mat-list-icon>inventory</mat-icon>
+          <span class="full-width">在庫管理</span>
+        </a>
+      </mat-list-item>
 		</mat-nav-list>
   </mat-sidenav>
 
