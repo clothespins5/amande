@@ -27,7 +27,7 @@ export class SelectColorFromImageComponent implements OnInit {
       imageData.data[1],
       imageData.data[2]
     );
-    this.paintService.setRGB(this._rgb);
+    this.paintService.changeRGB(this._rgb);
   }
 
   setDataUrlToCanvas(dataUrl: string): void {

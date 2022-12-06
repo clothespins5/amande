@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Subject} from 'rxjs';
+import {Subject, Subscription} from 'rxjs';
 import {PaintApi} from "../api/paint-api";
 
 export class RGB {
@@ -28,21 +28,26 @@ export class Paint {
 })
 export class PaintService {
 
-  private rgb = new RGB(0, 0, 0);
-  private paints = new Subject<Paint[]>();
-  public observable = this.paints.asObservable();
+  private _subscriptionToGet?: Subscription;
+  private _rgb = new RGB(0, 0, 0);
+  private _paints = new Subject<Paint[]>();
+
+  observable = this._paints.asObservable();
 
   constructor(
     private paintApi: PaintApi
   ) {}
 
-  public setRGB(rgb: RGB) {
-    this.rgb = rgb;
+  changeRGB(rgb: RGB) {
+    this._rgb = rgb;
   }
 
-  public fetch(): void {
-    this.paintApi
-      .get(this.rgb.toString())
+  fetch(): void {
+    if (this._subscriptionToGet !== undefined)
+      this._subscriptionToGet.unsubscribe();
+
+    this._subscriptionToGet = this.paintApi
+      .get(this._rgb.toString())
       .subscribe((response) => {
         const paints = response.results.map(
           item => new Paint(
@@ -51,7 +56,9 @@ export class PaintService {
             item.colorProximity
           )
         );
-        this.paints.next(paints);
+        this._paints.next(paints);
       });
   }
 }
+
+
