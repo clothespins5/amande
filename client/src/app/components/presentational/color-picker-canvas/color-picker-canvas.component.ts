@@ -2,8 +2,27 @@ import {AfterViewInit, Component, ElementRef, EventEmitter, Output, ViewChild} f
 
 @Component({
   selector: 'app-color-picker-canvas',
-  templateUrl: './color-picker-canvas.component.html',
-  styleUrls: ['./color-picker-canvas.component.sass']
+  template: `
+    <div class="canvas-block">
+      <div class="pick-mark" [ngStyle]="position"></div>
+      <canvas #myCanvas (click)="click($event)"></canvas>
+    </div>
+  `,
+  styles: [`
+    .canvas-block
+      position: relative
+
+      .pick-mark
+        position: absolute
+        width: 1rem
+        height: 1rem
+        border-radius: 1rem
+        border: solid 0.1rem black
+
+      canvas
+        border: solid 0.1rem black
+        border-radius: 0.25rem
+  `]
 })
 export class ColorPickerCanvasComponent implements AfterViewInit {
 
@@ -27,9 +46,14 @@ export class ColorPickerCanvasComponent implements AfterViewInit {
     const img = new Image();
     img.src = dataUrl;
     img.onload = () => {
-      this._canvasContext.canvas.width = img.width;
-      this._canvasContext.canvas.height = img.height;
-      this._canvasContext.drawImage(img, 0, 0);
+      const shrinkageRateY = 400 / img.height;
+      const shrinkageRateX = 400 / img.width;
+      const shrinkageRate = (shrinkageRateY < shrinkageRateX) ? shrinkageRateY : shrinkageRateX;
+      const canvasWidth = img.width * shrinkageRate;
+      const canvasHeight = img.height * shrinkageRate;
+      this._canvasContext.canvas.width = canvasWidth;
+      this._canvasContext.canvas.height = canvasHeight;
+      this._canvasContext.drawImage(img, 0, 0, canvasWidth, canvasHeight);
     }
   }
 

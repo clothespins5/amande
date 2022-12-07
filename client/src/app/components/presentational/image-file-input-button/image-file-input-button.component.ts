@@ -2,8 +2,9 @@ import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 
 @Component({
   selector: 'app-image-file-input-button',
-  templateUrl: './image-file-input-button.component.html',
-  styleUrls: ['./image-file-input-button.component.sass']
+  template: `
+    <input type="file" (change)="change($event)">
+  `
 })
 export class ImageFileInputButtonComponent implements OnInit {
 

@@ -1,6 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {ColorPickerCanvasComponent} from '../../presentational/color-picker-canvas/color-picker-canvas.component';
-import {PaintTableComponent} from '../../presentational/paint-table/paint-table.component';
+import {Component, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-find-paint',
@@ -8,12 +6,6 @@ import {PaintTableComponent} from '../../presentational/paint-table/paint-table.
   styleUrls: ['./find-paint.component.sass']
 })
 export class FindPaintComponent implements OnInit {
-
-  @ViewChild(ColorPickerCanvasComponent)
-  vallejoPickerCanvas!: ColorPickerCanvasComponent;
-
-  @ViewChild(PaintTableComponent)
-  vallejoTable!: PaintTableComponent;
 
   constructor() {}
 
