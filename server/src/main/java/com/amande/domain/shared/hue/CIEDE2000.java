@@ -99,7 +99,7 @@ public class CIEDE2000 {
   record C_Bar_Prime(double value) {
     static C_Bar_Prime calc(C_Prime cp1, C_Prime cp2) {
       return new C_Bar_Prime(
-        (cp1.value() - cp2.value()) / 2d
+        (cp1.value() + cp2.value()) / 2d
       );
     }
   }
@@ -198,7 +198,7 @@ public class CIEDE2000 {
             Math.pow(cbp.value(), 7d) / (Math.pow(cbp.value(), 7d) + Math.pow(25d, 7d))
           ) *
           Math.sin(
-            60d * Math.exp(
+            degreeToRadian(60d) * Math.exp(
               -Math.pow((hbp.value() - degreeToRadian(275d)) / degreeToRadian(25d), 2d)
             )
           )

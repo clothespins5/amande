@@ -34,6 +34,10 @@ public record RGB(
     return new XYZ(new XYZ.X(x), new XYZ.Y(y), new XYZ.Z(z));
   }
 
+  public static RGB create(double r, double g, double b) {
+    return new RGB(new R(r), new G(g), new B(b));
+  }
+
   /**
    * 文字列(例:"rgb(255, 255, 255)")からRGBを生成します
    *
