@@ -1,5 +1,7 @@
 package com.amande.domain.shared.hue;
 
+import lombok.NonNull;
+
 import java.util.regex.Pattern;
 
 public record RGB(
@@ -44,7 +46,7 @@ public record RGB(
    * @param rgb 文字列
    * @return RGB
    */
-  public static RGB createByString(String rgb) {
+  public static RGB createByString(@NonNull String rgb) {
     if (
       !Pattern
         .compile("^rgb\\( ?\\d{1,3} ?, ?\\d{1,3} ?, ?\\d{1,3} ?\\)$")

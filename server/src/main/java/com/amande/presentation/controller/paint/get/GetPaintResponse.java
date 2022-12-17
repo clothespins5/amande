@@ -1,4 +1,4 @@
-package com.amande.presentation.controller.paint;
+package com.amande.presentation.controller.paint.get;
 
 import java.util.List;
 

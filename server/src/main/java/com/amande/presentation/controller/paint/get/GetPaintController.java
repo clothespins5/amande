@@ -1,8 +1,11 @@
-package com.amande.presentation.controller.paint;
+package com.amande.presentation.controller.paint.get;
 
 import com.amande.application.query.paint.PaintQueryInput;
 import com.amande.application.query.paint.PaintQueryService;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.NonNull;
+import lombok.experimental.FieldDefaults;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -13,9 +16,10 @@ import static java.util.stream.Collectors.toList;
 
 @RestController
 @AllArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class GetPaintController {
 
-  private PaintQueryService service;
+  @NonNull PaintQueryService service;
 
   @CrossOrigin(origins = "http://localhost:4200")
   @GetMapping("/paints")

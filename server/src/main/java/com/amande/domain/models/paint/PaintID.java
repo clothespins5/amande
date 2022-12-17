@@ -1,3 +1,9 @@
 package com.amande.domain.models.paint;
 
-public record PaintID(Integer value) {}
+import java.util.UUID;
+
+public record PaintID(String value) {
+  public static PaintID generate() {
+    return new PaintID(UUID.randomUUID().toString());
+  }
+}
