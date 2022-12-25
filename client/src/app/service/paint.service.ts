@@ -63,12 +63,12 @@ export class PaintService {
       });
   }
 
-  create(): void {
+  create(paintName: string, colorCode: string): void {
     this.paintApi
       .post(
         {
-          colorName: 'aaa',
-          colorCode: 'rgb(200, 100, 30)'
+          paintName: paintName,
+          colorCode: colorCode
         }
       )
       .subscribe();

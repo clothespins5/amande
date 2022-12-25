@@ -11,7 +11,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.collectingAndThen;
 import static java.util.stream.Collectors.toList;
@@ -31,7 +30,7 @@ public class PaintRepositoryImpl implements PaintRepository {
         try {
           return objectMapper.readValue(
             record.jsonData(),
-            PaintEvent.Created.class // TODO eventTypeから型をは別
+            PaintEvent.eventTypeToClass.get(record.eventType)
           );
         } catch (JsonProcessingException e) {
           throw new RuntimeException(e);

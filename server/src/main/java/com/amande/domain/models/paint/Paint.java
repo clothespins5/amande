@@ -46,7 +46,7 @@ public class Paint {
     @NonNull RGB colorCode
   ) {
     var createEvent = new PaintEvent.Created(
-      0,
+      EventStream.createEmptyStream().nextVersion(),
       PaintID.generate(),
       name,
       colorCode

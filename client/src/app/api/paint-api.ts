@@ -15,7 +15,7 @@ export type GetPaintResponse = {
 
 export type PostPaintRequest = {
 
-  colorName: string,
+  paintName: string,
   colorCode: string
 }
 
