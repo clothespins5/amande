@@ -4,6 +4,6 @@ import lombok.Data;
 
 @Data
 public class PostPaintRequest {
-  String name;
+  String colorName;
   String colorCode;
 }

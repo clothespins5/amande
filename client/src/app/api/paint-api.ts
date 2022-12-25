@@ -13,6 +13,12 @@ export type GetPaintResponse = {
   results: GetPaintResponseItem[]
 }
 
+export type PostPaintRequest = {
+
+  colorName: string,
+  colorCode: string
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -23,5 +29,9 @@ export class PaintApi {
 
   public get(rgb: string): Observable<GetPaintResponse> {
     return this.http.get<GetPaintResponse>('http://localhost:8080/paints?rgb='+rgb+'&limit=10');
+  }
+
+  public post(request: PostPaintRequest): Observable<Object> {
+    return this.http.post('http://localhost:8080/paints', request);
   }
 }

@@ -1,4 +1,4 @@
-package com.amande.infrastructure.query.paint;
+package com.amande.infrastructure.repository.paint;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,9 +9,9 @@ import lombok.experimental.Accessors;
 @Accessors(fluent = true)
 @AllArgsConstructor
 @NoArgsConstructor
-public class PaintQueryRecord {
-  String id;
-  Integer lastVersion;
-  String colorName;
-  String colorCode;
+public class PaintEventRecord {
+  String aggregateID;
+  Integer version;
+  String eventType;
+  String jsonData;
 }

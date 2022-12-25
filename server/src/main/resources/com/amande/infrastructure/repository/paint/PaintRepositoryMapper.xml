@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.amande.infrastructure.repository.paint.PaintRepositoryMapper">
+  <select id="selectEvents"
+          resultType="com.amande.infrastructure.repository.paint.PaintEventRecord">
+    select
+      aggregate_id aggregateID,
+      "version",
+      event_type   eventType,
+      json_data    jsonData
+    from domain.paint_event pe
+    where aggregate_id = #{aggregateID}
+  </select>
+  <insert id="insertEvent">
+    insert into domain.paint_event(aggregate_id, "version", event_type, json_data)
+    values
+    <foreach collection="eventRecords" item="record" open="(" close=")" separator=",">
+      #{record.aggregateID},
+      #{record.version},
+      #{record.eventType},
+      #{record.jsonData}::jsonb
+    </foreach>
+  </insert>
+  <insert id="upsertAggregate">
+    insert into domain.paint_aggregate(aggregate_id, last_version)
+    values (#{aggregateID}, #{lastVersion})
+    on conflict on constraint paint_aggregate_pkey
+    do update set
+        last_version = excluded.last_version
+  </insert>
+</mapper>

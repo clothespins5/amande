@@ -7,12 +7,14 @@ services:
       dockerfile: ./server/Dockerfile
     volumes:
       - ./server:/projects
+      - gradle-.gradle:/projects/.gradle
+      - gradle-build:/projects/build
     ports:
       - "8080:8080"
     expose:
       - 8080
     working_dir: /projects
-    command: gradle clean bootRun -x test
+    command: gradle bootRun -x test
 
   front:
     container_name: front
@@ -26,7 +28,7 @@ services:
 
 
   db:
-    container_name: dbcd
+    container_name: postgresql
     image: postgres:latest
     hostname: postgres
     restart: unless-stopped
@@ -44,5 +46,6 @@ services:
 
 volumes:
   postgres-data:
-  redis-data:
+  gradle-.gradle:
+  gradle-build:
 

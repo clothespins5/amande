@@ -1,14 +1,13 @@
 package com.amande.domain.models.paint;
 
+import com.amande.domain.event.DomainEvent;
 import com.amande.domain.event.DomainEventPublisher;
+import com.amande.domain.event.EventStream;
 import com.amande.domain.shared.hue.RGB;
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
 import lombok.Value;
 import lombok.experimental.Accessors;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import static lombok.AccessLevel.PRIVATE;
 
@@ -17,22 +16,22 @@ import static lombok.AccessLevel.PRIVATE;
 @Value
 public class Paint {
 
-  List<PaintEvent> occurredEvents;
+  EventStream eventStream;
 
   PaintID id;
   PaintName name;
   RGB colorCode;
 
-  public static Paint reconstruct(@NonNull List<PaintEvent> events) {
-    if (events.isEmpty())
+  public static Paint reconstruct(@NonNull EventStream eventStream) {
+    if (eventStream.events().isEmpty())
       throw new IllegalArgumentException("cannot reconstruct if events are empty");
     Paint paint = null;
-    for (var event : events)
+    for (var event : eventStream.events())
       paint = handleEvent(paint, event);
     return paint;
   }
 
-  private static Paint handleEvent(Paint paint, PaintEvent event) {
+  private static Paint handleEvent(Paint paint, DomainEvent event) {
     if (event instanceof PaintEvent.Created created)
       return Factory.create(created);
     if (event instanceof PaintEvent.NameChanged nameChanged)
@@ -46,19 +45,30 @@ public class Paint {
     @NonNull PaintName name,
     @NonNull RGB colorCode
   ) {
-    var createEvent = new PaintEvent.Created(PaintID.generate(), name, colorCode);
+    var createEvent = new PaintEvent.Created(
+      0,
+      PaintID.generate(),
+      name,
+      colorCode
+    );
     DomainEventPublisher.publish(createEvent);
-    return reconstruct(List.of(createEvent));
+    return Factory.create(createEvent);
   }
 
   public Paint changeName(@NonNull PaintName name) {
-    var changeName = new PaintEvent.NameChanged(name);
+    var changeName = new PaintEvent.NameChanged(
+      eventStream().nextVersion(),
+      name
+    );
     DomainEventPublisher.publish(changeName);
     return handleEvent(this, changeName);
   }
 
   public Paint changeColorCode(@NonNull RGB colorCode) {
-    var changeColorCode = new PaintEvent.ColorCodeChanged(colorCode);
+    var changeColorCode = new PaintEvent.ColorCodeChanged(
+      eventStream().nextVersion(),
+      colorCode
+    );
     DomainEventPublisher.publish(changeColorCode);
     return handleEvent(this, changeColorCode);
   }
@@ -68,7 +78,7 @@ public class Paint {
 
     static Paint create(PaintEvent.Created event) {
       return new Paint(
-        List.of(event),
+        EventStream.createEmptyStream().append(event),
         event.id(),
         event.name(),
         event.colorCode()
@@ -76,10 +86,8 @@ public class Paint {
     }
 
     static Paint create(Paint paint, PaintEvent.NameChanged event) {
-      var mutableEventList = new ArrayList<>(paint.occurredEvents);
-      mutableEventList.add(event);
       return new Paint(
-        List.copyOf(mutableEventList),
+        paint.eventStream().append(event),
         paint.id(),
         event.name(),
         paint.colorCode()
@@ -87,10 +95,8 @@ public class Paint {
     }
 
     static Paint create(Paint paint, PaintEvent.ColorCodeChanged event) {
-      var mutableEventList = new ArrayList<>(paint.occurredEvents);
-      mutableEventList.add(event);
       return new Paint(
-        List.copyOf(mutableEventList),
+        paint.eventStream().append(event),
         paint.id(),
         paint.name(),
         event.colorCode()

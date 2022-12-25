@@ -2,6 +2,7 @@ package com.amande.application.command.paint;
 
 import com.amande.domain.models.paint.Paint;
 import com.amande.domain.models.paint.PaintName;
+import com.amande.domain.models.paint.PaintRepository;
 import com.amande.domain.shared.hue.RGB;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -10,11 +11,16 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 public class PaintCreateService {
 
+  PaintRepository repository;
+
   public Output create(Input input) {
     var paint = Paint.create(
-      new PaintName(input.name),
+      new PaintName(input.paintName),
       RGB.createByString(input.colorCode)
     );
+
+    repository.save(paint);
+
     return new Output(
       paint.id().value(),
       paint.name().value(),
@@ -23,7 +29,7 @@ public class PaintCreateService {
   }
 
   public record Input(
-    String name,
+    String paintName,
     String colorCode
   ) {}
 

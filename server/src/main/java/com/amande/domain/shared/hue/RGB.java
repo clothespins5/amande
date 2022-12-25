@@ -9,9 +9,9 @@ public record RGB(
   G g,
   B b
 ) {
-  record R(double value) {}
-  record G(double value) {}
-  record B(double value) {}
+  record R(Double value) {}
+  record G(Double value) {}
+  record B(Double value) {}
   /**
    * XYZに変換する
    * <p>参考
@@ -36,6 +36,15 @@ public record RGB(
     return new XYZ(new XYZ.X(x), new XYZ.Y(y), new XYZ.Z(z));
   }
 
+  @Override
+  public String toString() {
+    return "rgb(%s, %s, %s)".formatted(
+      r.value().intValue(),
+      g.value().intValue(),
+      b.value().intValue()
+    );
+  }
+
   public static RGB create(double r, double g, double b) {
     return new RGB(new R(r), new G(g), new B(b));
   }
@@ -57,9 +66,9 @@ public record RGB(
     var rgbMatcher = Pattern
       .compile("(?<=[(, ])\\d{1,3}")
       .matcher(rgb);
-    var r = rgbMatcher.find() ? Integer.parseInt(rgbMatcher.group()) : 0;
-    var g = rgbMatcher.find() ? Integer.parseInt(rgbMatcher.group()) : 0;
-    var b = rgbMatcher.find() ? Integer.parseInt(rgbMatcher.group()) : 0;
+    var r = rgbMatcher.find() ? Double.parseDouble(rgbMatcher.group()) : 0;
+    var g = rgbMatcher.find() ? Double.parseDouble(rgbMatcher.group()) : 0;
+    var b = rgbMatcher.find() ? Double.parseDouble(rgbMatcher.group()) : 0;
     return new RGB(new R(r), new G(g), new B(b));
   }
 }

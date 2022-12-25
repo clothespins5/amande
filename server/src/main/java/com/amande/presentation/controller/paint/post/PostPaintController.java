@@ -21,7 +21,7 @@ public class PostPaintController {
   public void post(@RequestBody PostPaintRequest request) {
     service.create(
       new PaintCreateService.Input(
-        request.getName(),
+        request.getColorName(),
         request.getColorCode()
       )
     );

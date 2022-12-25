@@ -7,7 +7,8 @@ export class RGB {
     public readonly r: number,
     public readonly g: number,
     public readonly b: number
-  ) {}
+  ) {
+  }
 
   public toString(): string {
     return 'rgb(' + this.r + ',' + this.g + ',' + this.b + ')'
@@ -19,7 +20,8 @@ export class Paint {
     public readonly name: string,
     public readonly colorCode: string,
     public readonly colorProximity: number
-  ) {}
+  ) {
+  }
 }
 
 
@@ -36,7 +38,8 @@ export class PaintService {
 
   constructor(
     private paintApi: PaintApi
-  ) {}
+  ) {
+  }
 
   changeRGB(rgb: RGB) {
     this._rgb = rgb;
@@ -58,6 +61,17 @@ export class PaintService {
         );
         this._paints.next(paints);
       });
+  }
+
+  create(): void {
+    this.paintApi
+      .post(
+        {
+          colorName: 'aaa',
+          colorCode: 'rgb(200, 100, 30)'
+        }
+      )
+      .subscribe();
   }
 }
 

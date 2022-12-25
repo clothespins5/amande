@@ -8,6 +8,4 @@ public interface PaintRepository {
 
     void save(Paint paint);
 
-    void delete(Paint paint);
-    
 }
