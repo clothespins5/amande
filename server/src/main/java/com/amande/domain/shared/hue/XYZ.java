@@ -17,7 +17,7 @@ public record XYZ(
    *   <li><a href="https://qiita.com/lookman/items/a0df0833d2ee07b8eccc">qiita</a>
    *
    */
-  public LAB toLAB() {
+  public Lab toLAB() {
 
     double x = this.x.value() * 100d / 95.047d;
     double y = this.y.value() * 100d / 100d;
@@ -31,10 +31,10 @@ public record XYZ(
     double a = 500 * (x - y);
     double b = 200 * (y - z);
 
-    return new LAB(
-      new LAB.L(l / 100),
-      new LAB.A(a / 100),
-      new LAB.B(b / 100)
+    return new Lab(
+      new Lab.L(l / 100),
+      new Lab.a(a / 100),
+      new Lab.b(b / 100)
     );
   }
 }

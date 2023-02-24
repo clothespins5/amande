@@ -1,16 +1,16 @@
 package com.amande.domain.shared.hue;
 
-public record LAB(
+public record Lab(
   L l,
-  A a,
-  B b
+  a a,
+  b b
 ) {
   record L(double value) {
   }
 
-  record A(double value) {
+  record a(double value) {
   }
 
-  record B(double value) {
+  record b(double value) {
   }
 }

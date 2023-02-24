@@ -12,70 +12,74 @@ public class CIEDE2000 {
    * @param rgb2 比較先カラーコード
    * @return 色差
    */
-  public static double calculation(RGB rgb1, RGB rgb2) {
+  public static double calculateFromRGB(RGB rgb1, RGB rgb2) {
     var lab1 = rgb1.toXYZ().toLAB();
     var lab2 = rgb2.toXYZ().toLAB();
-    var dLp = Delta_L_Prime.calc(lab2.l(), lab1.l());
-    var lb = L_Bar.calc(lab1.l(), lab2.l());
-    var c1 = C.calc(lab1.a(), lab1.b());
-    var c2 = C.calc(lab2.a(), lab2.b());
-    var cb = C_Bar.calc(c1, c2);
-    var ap1 = a_Prime.calc(lab1.a(), cb);
-    var ap2 = a_Prime.calc(lab2.a(), cb);
-    var cp1 = C_Prime.calc(lab1.a(), lab1.b());
-    var cp2 = C_Prime.calc(lab2.a(), lab2.b());
-    var cbp = C_Bar_Prime.calc(cp1, cp2);
-    var dCp = Delta_C_Prime.calc(cp1, cp2);
-    var hp1 = h_Prime.calc(lab1.b(), ap1);
-    var hp2 = h_Prime.calc(lab2.b(), ap2);
-    Delta_h_Prime dhp;
-    H_Bar_Prime hbp;
+    return calculateFromLab(lab1, lab2);
+  }
+
+  public static double calculateFromLab(Lab lab1, Lab lab2) {
+    var dLp = _Delta_L_Prime.calc(lab2.l(), lab1.l());
+    var lb = _L_Bar.calc(lab1.l(), lab2.l());
+    var c1 = _C.calc(lab1.a(), lab1.b());
+    var c2 = _C.calc(lab2.a(), lab2.b());
+    var cb = _C_Bar.calc(c1, c2);
+    var ap1 = _a_Prime.calc(lab1.a(), cb);
+    var ap2 = _a_Prime.calc(lab2.a(), cb);
+    var cp1 = _C_Prime.calc(ap1, lab1.b());
+    var cp2 = _C_Prime.calc(ap2, lab2.b());
+    var cbp = _C_Bar_Prime.calc(cp1, cp2);
+    var dCp = _Delta_C_Prime.calc(cp1, cp2);
+    var hp1 = _h_Prime.calc(lab1.b(), ap1);
+    var hp2 = _h_Prime.calc(lab2.b(), ap2);
+    _Delta_h_Prime dhp;
+    _H_Bar_Prime hbp;
     if (cp1.value() == 0 || cp2.value() == 0) {
-      dhp = new Delta_h_Prime(0d);
-      hbp = new H_Bar_Prime(hp1.value() + hp2.value());
+      dhp = new _Delta_h_Prime(0d);
+      hbp = new _H_Bar_Prime(hp1.value() + hp2.value());
     } else {
-      dhp = Delta_h_Prime.calc(hp1, hp2);
-      hbp = H_Bar_Prime.calc(hp1, hp2);
+      dhp = _Delta_h_Prime.calc(hp1, hp2);
+      hbp = _H_Bar_Prime.calc(hp1, hp2);
     }
-    var dHp = Delta_H_Prime.calc(cp1, cp2, dhp);
-    var t = T.calc(hbp);
-    var sl = SL.calc(lb);
-    var sc = SC.calc(cbp);
-    var sh = SH.calc(cbp, t);
-    var rt = RT.calc(cbp, hbp);
-    var dE00 = Delta_E00.calc(dLp, sl, dCp, sc, dHp, sh, rt);
+    var dHp = _Delta_H_Prime.calc(cp1, cp2, dhp);
+    var t = _T.calc(hbp);
+    var sl = _SL.calc(lb);
+    var sc = _SC.calc(cbp);
+    var sh = _SH.calc(cbp, t);
+    var rt = _RT.calc(cbp, hbp);
+    var dE00 = _Delta_E00.calc(dLp, sl, dCp, sc, dHp, sh, rt);
     return dE00.value();
   }
 
-  record Delta_L_Prime(double value) {
-    static Delta_L_Prime calc(LAB.L l1, LAB.L l2) {
-      return new Delta_L_Prime(l1.value() - l2.value());
+  private record _Delta_L_Prime(double value) {
+    static _Delta_L_Prime calc(Lab.L l1, Lab.L l2) {
+      return new _Delta_L_Prime(l1.value() - l2.value());
     }
   }
 
-  record C(double value) {
-    static C calc(LAB.A a, LAB.B b) {
-      return new C(
+  private record _C(double value) {
+    static _C calc(Lab.a a, Lab.b b) {
+      return new _C(
         Math.sqrt(Math.pow(a.value(), 2d) + Math.pow(b.value(), 2d))
       );
     }
   }
 
-  record L_Bar(double value) {
-    static L_Bar calc(LAB.L l1, LAB.L l2) {
-      return new L_Bar((l1.value() + l2.value()) / 2d);
+  private record _L_Bar(double value) {
+    static _L_Bar calc(Lab.L l1, Lab.L l2) {
+      return new _L_Bar((l1.value() + l2.value()) / 2d);
     }
   }
 
-  record C_Bar(double value) {
-    static C_Bar calc(C c1, C c2) {
-      return new C_Bar((c1.value() + c2.value()) / 2d);
+  private record _C_Bar(double value) {
+    static _C_Bar calc(_C c1, _C c2) {
+      return new _C_Bar((c1.value() + c2.value()) / 2d);
     }
   }
 
-  record a_Prime(double value) {
-    static a_Prime calc(LAB.A a, C_Bar cBar) {
-      return new a_Prime(
+  private record _a_Prime(double value) {
+    static _a_Prime calc(Lab.a a, _C_Bar cBar) {
+      return new _a_Prime(
         a.value() + (a.value() / 2d) *
           (
             1 - Math.sqrt(
@@ -86,141 +90,143 @@ public class CIEDE2000 {
     }
   }
 
-  record C_Prime(double value) {
-    static C_Prime calc(LAB.A a, LAB.B b) {
-      return new C_Prime(
+  private record _C_Prime(double value) {
+    static _C_Prime calc(_a_Prime ap, Lab.b b) {
+      return new _C_Prime(
         Math.sqrt(
-          Math.pow(a.value(), 2d) + Math.pow(b.value(), 2d)
+          Math.pow(ap.value(), 2d) + Math.pow(b.value(), 2d)
         )
       );
     }
   }
 
-  record C_Bar_Prime(double value) {
-    static C_Bar_Prime calc(C_Prime cp1, C_Prime cp2) {
-      return new C_Bar_Prime(
+  private record _C_Bar_Prime(double value) {
+    static _C_Bar_Prime calc(_C_Prime cp1, _C_Prime cp2) {
+      return new _C_Bar_Prime(
         (cp1.value() + cp2.value()) / 2d
       );
     }
   }
 
-  record Delta_C_Prime(double value) {
-    static Delta_C_Prime calc(C_Prime cp1, C_Prime cp2) {
-      return new Delta_C_Prime(
+  private record _Delta_C_Prime(double value) {
+    static _Delta_C_Prime calc(_C_Prime cp1, _C_Prime cp2) {
+      return new _Delta_C_Prime(
         cp2.value() - cp1.value()
       );
     }
   }
 
-  record h_Prime(double value) {
-    static h_Prime calc(LAB.B b, a_Prime ap) {
+  private record _h_Prime(double value) {
+    static _h_Prime calc(Lab.b b, _a_Prime ap) {
       if (b.value() == 0 && ap.value() == 0)
-        return new h_Prime(0d);
-      var hp = Math.atan2(b.value(), ap.value());
+        return new _h_Prime(0d);
+      var hp = Math.toDegrees(Math.atan2(b.value(), ap.value()));
       if (hp < 0)
-        hp = hp + degreeToRadian(360d);
-      return new h_Prime(hp);
+        hp = hp + 360d;
+      return new _h_Prime(hp);
     }
   }
 
-  record Delta_h_Prime(double value) {
-    static Delta_h_Prime calc(h_Prime hp1, h_Prime hp2) {
-      if (Math.abs(hp1.value() - hp2.value()) <= degreeToRadian(180d))
-        return new Delta_h_Prime(hp1.value() - hp2.value());
-      if (hp1.value() <= hp2.value())
-        return new Delta_h_Prime(hp1.value() - hp2.value() + degreeToRadian(360d));
-      return new Delta_h_Prime(hp1.value() - hp2.value() - degreeToRadian(360d));
+  private record _Delta_h_Prime(double value) {
+    static _Delta_h_Prime calc(_h_Prime hp1, _h_Prime hp2) {
+      if (Math.abs(hp2.value() - hp1.value()) <= 180d)
+        return new _Delta_h_Prime(hp2.value() - hp1.value());
+      if (hp2.value() <= hp1.value())
+        return new _Delta_h_Prime(hp2.value() - hp1.value() + 360d);
+      return new _Delta_h_Prime(hp2.value() - hp1.value() - 360d);
     }
   }
 
-  record H_Bar_Prime(double value) {
-    static H_Bar_Prime calc(h_Prime hp1, h_Prime hp2) {
-      if (Math.abs(hp1.value() - hp2.value()) <= degreeToRadian(180d))
-        return new H_Bar_Prime(
+  private record _H_Bar_Prime(double value) {
+    static _H_Bar_Prime calc(_h_Prime hp1, _h_Prime hp2) {
+      if (Math.abs(hp1.value() - hp2.value()) <= 180d)
+        return new _H_Bar_Prime(
           (hp1.value() + hp2.value()) / 2d
         );
       if (hp1.value() <= hp2.value())
-        return new H_Bar_Prime(
-          (hp1.value() + hp2.value() + degreeToRadian(360d)) / 2d
+        return new _H_Bar_Prime(
+          (hp1.value() + hp2.value() + 360d) / 2d
         );
-      return new H_Bar_Prime(
-        (hp1.value() + hp2.value() - degreeToRadian(360d)) / 2d
+      return new _H_Bar_Prime(
+        (hp1.value() + hp2.value() - 360d) / 2d
       );
     }
   }
 
-  record Delta_H_Prime(double value) {
-    static Delta_H_Prime calc(C_Prime cp1, C_Prime cp2, Delta_h_Prime dhp) {
-      return new Delta_H_Prime(
-        2d * Math.sqrt(cp1.value() * cp2.value()) * Math.sin(dhp.value() / 2d)
+  private record _Delta_H_Prime(double value) {
+    static _Delta_H_Prime calc(_C_Prime cp1, _C_Prime cp2, _Delta_h_Prime dhp) {
+      return new _Delta_H_Prime(
+        2d * Math.sqrt(cp1.value() * cp2.value()) * Math.sin(Math.toRadians(dhp.value() / 2d))
       );
     }
   }
 
-  record T(double value) {
-    static T calc(H_Bar_Prime hp) {
-      return new T(
-        1 -
-          0.17d * Math.cos(hp.value() - degreeToRadian(30d)) +
-          0.24d * Math.cos(2d * hp.value()) +
-          0.32d * Math.cos(3d * hp.value() + degreeToRadian(6d)) -
-          0.20d * Math.cos(4d * hp.value() + degreeToRadian(63d))
+  private record _T(double value) {
+    static _T calc(_H_Bar_Prime hbp) {
+      return new _T(
+        1d -
+          0.17d * Math.cos(Math.toRadians(hbp.value() - 30d)) +
+          0.24d * Math.cos(Math.toRadians(2d * hbp.value())) +
+          0.32d * Math.cos(Math.toRadians(3d * hbp.value() + 6d)) -
+          0.20d * Math.cos(Math.toRadians(4d * hbp.value() - 63d))
       );
     }
   }
 
-  record SL(double value) {
-    static SL calc(L_Bar lb) {
-      return new SL(
+  private record _SL(double value) {
+    static _SL calc(_L_Bar lb) {
+      return new _SL(
         1d +
           0.015d * Math.pow(lb.value() - 50d, 2d) / Math.sqrt(20d + Math.pow(lb.value() - 50d, 2d))
       );
     }
   }
 
-  record SC(double value) {
-    static SC calc(C_Bar_Prime cbp) {
-      return new SC(1d + 0.045d * cbp.value());
+  private record _SC(double value) {
+    static _SC calc(_C_Bar_Prime cbp) {
+      return new _SC(1d + 0.045d * cbp.value());
     }
   }
 
-  record SH(double value) {
-    static SH calc(C_Bar_Prime cbp, T t) {
-      return new SH(1d + 0.015d * cbp.value() * t.value());
+  private record _SH(double value) {
+    static _SH calc(_C_Bar_Prime cbp, _T t) {
+      return new _SH(1d + 0.015d * cbp.value() * t.value());
     }
   }
 
-  record RT(double value) {
-    static RT calc(C_Bar_Prime cbp, H_Bar_Prime hbp) {
-      return new RT(
+  private record _RT(double value) {
+    static _RT calc(_C_Bar_Prime cbp, _H_Bar_Prime hbp) {
+      return new _RT(
         -2d *
           Math.sqrt(
             Math.pow(cbp.value(), 7d) / (Math.pow(cbp.value(), 7d) + Math.pow(25d, 7d))
           ) *
           Math.sin(
-            degreeToRadian(60d) * Math.exp(
-              -Math.pow((hbp.value() - degreeToRadian(275d)) / degreeToRadian(25d), 2d)
+            Math.toRadians(
+              60d * Math.exp(
+                -Math.pow((hbp.value() - 275d) / 25d, 2d)
+              )
             )
           )
       );
     }
   }
 
-  record Delta_E00(double value) {
+  private record _Delta_E00(double value) {
     static final double kl = 1d;
     static final double kc = 1d;
     static final double kh = 1d;
 
-    static Delta_E00 calc(
-      Delta_L_Prime dLp,
-      SL sl,
-      Delta_C_Prime dCp,
-      SC sc,
-      Delta_H_Prime dHp,
-      SH sh,
-      RT rt
+    static _Delta_E00 calc(
+      _Delta_L_Prime dLp,
+      _SL sl,
+      _Delta_C_Prime dCp,
+      _SC sc,
+      _Delta_H_Prime dHp,
+      _SH sh,
+      _RT rt
     ) {
-      return new Delta_E00(
+      return new _Delta_E00(
         Math.sqrt(
           Math.pow(dLp.value() / (kl * sl.value()), 2d) +
             Math.pow(dCp.value() / (kc * sc.value()), 2d) +
@@ -229,9 +235,5 @@ public class CIEDE2000 {
         )
       );
     }
-  }
-
-  static double degreeToRadian(double degree) {
-    return degree * (Math.PI / 180d);
   }
 }
