@@ -1,7 +1,12 @@
 import {AfterViewInit, Component, ElementRef, EventEmitter, Output, ViewChild} from '@angular/core';
+import {NgStyle} from "@angular/common";
 
 @Component({
   selector: 'app-color-picker-canvas',
+  standalone: true,
+  imports: [
+    NgStyle
+  ],
   template: `
     <div class="canvas-block">
       <div class="pick-mark" [ngStyle]="position"></div>

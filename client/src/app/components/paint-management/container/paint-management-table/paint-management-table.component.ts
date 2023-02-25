@@ -1,10 +1,22 @@
 import {Component, OnInit} from '@angular/core';
 import {PaintService} from "../../../../service/paint.service";
+import {MatButtonModule} from "@angular/material/button";
 
 @Component({
   selector: 'app-paint-management-table',
-  templateUrl: './paint-management-table.component.html',
-  styleUrls: ['./paint-management-table.component.sass']
+  standalone: true,
+  imports: [
+    MatButtonModule
+  ],
+  template: `
+    <div>
+      <button mat-raised-button color="primary" (click)="register()">登録</button>
+    </div>
+  `,
+  styles: [`
+    div
+      min-height: 100vh
+  `]
 })
 export class PaintManagementTableComponent implements OnInit {
 

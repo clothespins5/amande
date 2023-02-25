@@ -1,26 +1,31 @@
 import { Component, OnInit } from '@angular/core';
 import {Paint} from "../../../../service/paint.service";
+import {MatTableModule} from "@angular/material/table";
 
 @Component({
   selector: 'app-paint-table',
+  standalone: true,
+  imports: [
+    MatTableModule
+  ],
   template: `
     <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
       <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef> Name </th>
+        <th mat-header-cell *matHeaderCellDef> Name</th>
         <td mat-cell *matCellDef="let element"> {{element.name}} </td>
       </ng-container>
       <ng-container matColumnDef="rgb">
-        <th mat-header-cell *matHeaderCellDef> RGB </th>
+        <th mat-header-cell *matHeaderCellDef> RGB</th>
         <td mat-cell *matCellDef="let element"> {{element.colorCode}} </td>
       </ng-container>
       <ng-container matColumnDef="color">
-        <th mat-header-cell *matHeaderCellDef> Color </th>
+        <th mat-header-cell *matHeaderCellDef> Color</th>
         <td mat-cell *matCellDef="let element">
           <div class="vallejo-color" [style.background-color]="element.colorCode"></div>
         </td>
       </ng-container>
       <ng-container matColumnDef="diff">
-        <th mat-header-cell *matHeaderCellDef> Diff </th>
+        <th mat-header-cell *matHeaderCellDef> Diff</th>
         <td mat-cell *matCellDef="let element"> {{element.colorProximity}} </td>
       </ng-container>
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

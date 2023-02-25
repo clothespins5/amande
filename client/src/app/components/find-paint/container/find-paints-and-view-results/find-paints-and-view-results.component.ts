@@ -2,11 +2,33 @@ import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {PaintService} from "../../../../service/paint.service";
 import {PaintTableComponent} from "../../presentational/paint-table/paint-table.component";
 import {Subscription} from "rxjs";
+import {MatButtonModule} from "@angular/material/button";
 
 @Component({
   selector: 'app-find-paints-and-view-results',
-  templateUrl: './find-paints-and-view-results.component.html',
-  styleUrls: ['./find-paints-and-view-results.component.sass']
+  standalone: true,
+  imports: [
+    MatButtonModule,
+    PaintTableComponent
+  ],
+  template: `
+    <div class="searchButtonArea">
+      <button
+        mat-raised-button
+        color="primary"
+        (click)="findPaints()"
+      >検索</button>
+    </div>
+    <app-paint-table></app-paint-table>
+  `,
+  styles: [`
+    .searchButtonArea
+      margin: 1rem
+      text-align: center
+
+      button
+        width: 50%
+  `]
 })
 export class FindPaintsAndViewResultsComponent implements OnInit, OnDestroy {
 

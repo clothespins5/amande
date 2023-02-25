@@ -7,9 +7,7 @@ describe('PaintStockComponent', () => {
   let fixture: ComponentFixture<PaintManagementComponent>;
 
   beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [ PaintManagementComponent ]
-    })
+    await TestBed.configureTestingModule({})
     .compileComponents();
 
     fixture = TestBed.createComponent(PaintManagementComponent);

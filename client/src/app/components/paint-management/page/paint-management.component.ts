@@ -1,18 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import {Component} from '@angular/core';
 
 @Component({
   selector: 'app-paint-management',
-  templateUrl: './paint-management.component.html',
-  styleUrls: ['./paint-management.component.sass']
+  template: `
+    <app-page-container>
+      <app-paint-management-table></app-paint-management-table>
+    </app-page-container>
+  `,
 })
-export class PaintManagementComponent implements OnInit {
+export class PaintManagementComponent {
 
   constructor() { }
 
-  ngOnInit(): void {
-  }
-
-  register() {
-
-  }
 }

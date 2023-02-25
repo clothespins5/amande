@@ -2,6 +2,7 @@ import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 
 @Component({
   selector: 'app-image-file-input-button',
+  standalone: true,
   template: `
     <input type="file" (change)="change($event)">
   `

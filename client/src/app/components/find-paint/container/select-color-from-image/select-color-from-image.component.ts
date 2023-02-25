@@ -1,16 +1,28 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {PaintService, RGB} from "../../../../service/paint.service";
 import {ColorPickerCanvasComponent} from "../../presentational/color-picker-canvas/color-picker-canvas.component";
+import {
+  ImageFileInputButtonComponent
+} from "../../presentational/image-file-input-button/image-file-input-button.component";
 
 @Component({
   selector: 'app-select-color-from-image',
+  standalone: true,
+  imports: [
+    ColorPickerCanvasComponent,
+    ImageFileInputButtonComponent
+  ],
   template: `
     <div class="select-color-from-image-block">
-      <app-color-picker-canvas (clickCanvas)="onClickCanvas($event)"></app-color-picker-canvas>
+      <app-color-picker-canvas
+        (clickCanvas)="onClickCanvas($event)"
+      ></app-color-picker-canvas>
       <div>
-        <app-image-file-input-button (onFileLoad)="setDataUrlToCanvas($event)"></app-image-file-input-button>
+        <app-image-file-input-button
+          (onFileLoad)="setDataUrlToCanvas($event)"
+        ></app-image-file-input-button>
         <div>
-          <span class="selectedColor" [style.background-color]="getClickedCanvasColor()"></span>
+          <span class="selected-color" [style.background-color]="getClickedCanvasColor()"></span>
           {{getClickedCanvasColor()}}
         </div>
       </div>
@@ -22,7 +34,7 @@ import {ColorPickerCanvasComponent} from "../../presentational/color-picker-canv
       flex-direction: column
       align-items: center
 
-    .selectedColor
+    .selected-color
       display: inline-block
       width: 1rem
       height: 1rem
