@@ -5,29 +5,35 @@
 <mapper namespace="com.amande.infrastructure.repository.paint.PaintRepositoryMapper">
   <select id="selectEvents"
           resultType="com.amande.infrastructure.repository.paint.PaintEventRecord">
-    select
-      aggregate_id aggregateID,
-      "version",
-      event_type   eventType,
-      json_data    jsonData
-    from domain.paint_event pe
-    where aggregate_id = #{aggregateID}
+    SELECT aggregate_id aggregateID,
+           "version",
+           event_type   eventType,
+           json_data    jsonData
+    FROM domain.paint_event pe
+    WHERE aggregate_id = #{aggregateID}
   </select>
   <insert id="insertEvent">
-    insert into domain.paint_event(aggregate_id, "version", event_type, json_data)
-    values
-    <foreach collection="eventRecords" item="record" open="(" close=")" separator=",">
+    INSERT INTO domain.paint_event(aggregate_id, "version", event_type, json_data)
+    VALUES
+    <foreach collection="eventRecords" item="record" separator=",">
+    (
       #{record.aggregateID},
       #{record.version},
       #{record.eventType},
       #{record.jsonData}::jsonb
+    )
     </foreach>
   </insert>
   <insert id="upsertAggregate">
-    insert into domain.paint_aggregate(aggregate_id, last_version)
-    values (#{aggregateID}, #{lastVersion})
-    on conflict on constraint paint_aggregate_pkey
-    do update set
-        last_version = excluded.last_version
+    INSERT INTO domain.paint_aggregate(
+      aggregate_id,
+      last_version
+    )
+    VALUES (
+             #{aggregateID},
+             #{lastVersion}
+           )
+    ON CONFLICT ON CONSTRAINT paint_aggregate_pkey
+      DO UPDATE SET last_version = excluded.last_version
   </insert>
 </mapper>

@@ -1,6 +1,6 @@
 package com.amande.domain.models.paint;
 
-import com.amande.domain.event.DomainEvent;
+import com.amande.domain.shared.event.DomainEvent;
 import com.amande.domain.shared.hue.RGB;
 
 import java.util.Map;

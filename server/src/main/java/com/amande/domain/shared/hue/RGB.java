@@ -55,7 +55,7 @@ public record RGB(
    * @param rgb 文字列
    * @return RGB
    */
-  public static RGB createByString(@NonNull String rgb) {
+  public static RGB createFromString(@NonNull String rgb) {
     if (
       !Pattern
         .compile("^rgb\\( ?\\d{1,3} ?, ?\\d{1,3} ?, ?\\d{1,3} ?\\)$")

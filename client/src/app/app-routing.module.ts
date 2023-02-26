@@ -1,17 +1,17 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {FindPaintComponent} from './components/find-paint/page/find-paint.component';
+import {FindPaintPageComponent} from './components/find-paints/page/page.component';
 
 const routes: Routes = [
-  {path: '', component: FindPaintComponent},
+  {path: '', component: FindPaintPageComponent},
   {
     path: 'find-paint',
-    loadChildren: () => import('./components/find-paint/page/find-paint.module')
-      .then((m) => m.FindPaintModule)
+    loadChildren: () => import('./components/find-paints/page/page.module')
+      .then((m) => m.FindPaintPageModule)
   },
   {
     path: 'paint-management',
-    loadChildren: () => import('./components/paint-management/page/paint-management.module')
+    loadChildren: () => import('./components/paint-management/page/page.module')
       .then((m) => m.PaintManagementModule)
   },
 ];

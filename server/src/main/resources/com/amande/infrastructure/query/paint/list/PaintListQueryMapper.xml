@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.amande.infrastructure.query.paint.list.PaintListQueryMapper">
+  <select id="select" resultType="com.amande.infrastructure.query.paint.list.PaintListQueryRecord">
+    SELECT p.aggregate_id id,
+           p.color_name   colorName,
+           p.color_code   colorCode
+    FROM query.paint p
+  </select>
+</mapper>

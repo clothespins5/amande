@@ -1,0 +1,31 @@
+<div>
+  <div class="select-color-from-image-block">
+    <app-color-picker-canvas
+      [dataUrl]="loadedImageDataUrl"
+      (clickCanvas)="onClickCanvas($event)"
+    ></app-color-picker-canvas>
+    <div>
+      <app-image-file-input-button
+        (onFileLoad)="loadedImageDataUrl = $event"
+      ></app-image-file-input-button>
+      <div>
+            <span
+              class="selected-color"
+              [style.background-color]="clickedCanvasColor.toString()"
+            ></span>
+        {{clickedCanvasColor.toString()}}
+      </div>
+    </div>
+  </div>
+  <div class="searchButtonArea">
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="searchNearestPaints()"
+    >検索
+    </button>
+  </div>
+  <app-paint-table
+    [dataSource]="nearestPaints"
+  ></app-paint-table>
+</div>

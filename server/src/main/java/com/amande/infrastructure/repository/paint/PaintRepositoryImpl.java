@@ -1,6 +1,6 @@
 package com.amande.infrastructure.repository.paint;
 
-import com.amande.domain.event.EventStream;
+import com.amande.domain.shared.event.EventStream;
 import com.amande.domain.models.paint.Paint;
 import com.amande.domain.models.paint.PaintEvent;
 import com.amande.domain.models.paint.PaintID;

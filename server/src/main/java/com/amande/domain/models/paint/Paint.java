@@ -1,8 +1,8 @@
 package com.amande.domain.models.paint;
 
-import com.amande.domain.event.DomainEvent;
-import com.amande.domain.event.DomainEventPublisher;
-import com.amande.domain.event.EventStream;
+import com.amande.domain.shared.event.DomainEvent;
+import com.amande.domain.shared.event.DomainEventPublisher;
+import com.amande.domain.shared.event.EventStream;
 import com.amande.domain.shared.hue.RGB;
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
@@ -28,7 +28,12 @@ public class Paint {
     Paint paint = null;
     for (var event : eventStream.events())
       paint = handleEvent(paint, event);
-    return paint;
+    return new Paint(
+      EventStream.createEventStreamFromVersion(paint.eventStream.version()),
+      paint.id(),
+      paint.name(),
+      paint.colorCode()
+    );
   }
 
   private static Paint handleEvent(Paint paint, DomainEvent event) {
@@ -55,13 +60,17 @@ public class Paint {
     return Factory.create(createEvent);
   }
 
-  public Paint changeName(@NonNull PaintName name) {
-    var changeName = new PaintEvent.NameChanged(
+  public void changeNameAndSave(
+    @NonNull PaintName name,
+    @NonNull PaintRepository repository
+  ) {
+    var event = new PaintEvent.NameChanged(
       eventStream().nextVersion(),
       name
     );
-    DomainEventPublisher.publish(changeName);
-    return handleEvent(this, changeName);
+    var paint = handleEvent(this, event);
+    repository.save(paint);
+    DomainEventPublisher.publish(event);
   }
 
   public Paint changeColorCode(@NonNull RGB colorCode) {
